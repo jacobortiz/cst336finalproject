@@ -10,141 +10,16 @@
     </head>
     
     <body>
-        {{!--/*For Login Modal*/--}}
-        <style>
-            body {font-family: Arial, Helvetica, sans-serif;}
-            
-            /* Full-width input fields */
-            #uname, input[type=password] {
-              width: 100%;
-              padding: 12px 20px;
-              margin: 8px 0;
-              display: inline-block;
-              border: 1px solid #ccc;
-              box-sizing: border-box;
-            }
-            
-            /* Set a style for all buttons */
-            #submitLogin {
-              background-color: #4CAF50;
-              color: white;
-              padding: 14px 20px;
-              margin: 8px 0;
-              border: none;
-              cursor: pointer;
-              width: 100%;
-            }
-            
-            #submitLogin:hover {
-              opacity: 0.8;
-            }
-            
-            /* Extra styles for the cancel button */
-            .cancelbtn {
-              width: auto;
-              padding: 10px 18px;
-              background-color: #f44336;
-            }
-            
-            /* Center the image and position the close button */
-            .imgcontainer {
-              text-align: center;
-              margin: 24px 0 12px 0;
-              position: relative;
-            }
-            
-            img.avatar {
-              width: 40%;
-              border-radius: 50%;
-            }
-            
-            .container {
-              padding: 16px;
-            }
-            
-            span.psw {
-              float: right;
-              padding-top: 16px;
-            }
-            
-            /* The Modal (background) */
-            .modal {
-              display: none; /* Hidden by default */
-              position: fixed; /* Stay in place */
-              z-index: 1; /* Sit on top */
-              left: 0;
-              top: 0;
-              width: 100%; /* Full width */
-              height: 100%; /* Full height */
-              overflow: auto; /* Enable scroll if needed */
-              background-color: rgb(0,0,0); /* Fallback color */
-              background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-              padding-top: 60px;
-            }
-            
-            /* Modal Content/Box */
-            .modal-content {
-              background-color: #fefefe;
-              margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-              border: 1px solid #888;
-              width: 80%; /* Could be more or less, depending on screen size */
-            }
-            
-            /* The Close Button (x) */
-            .close {
-              position: absolute;
-              right: 25px;
-              top: 0;
-              color: #000;
-              font-size: 35px;
-              font-weight: bold;
-            }
-            
-            .close:hover,
-            .close:focus {
-              color: red;
-              cursor: pointer;
-            }
-            
-            /* Add Zoom Animation */
-            .animate {
-              -webkit-animation: animatezoom 0.6s;
-              animation: animatezoom 0.6s
-            }
-            
-            @-webkit-keyframes animatezoom {
-              from {-webkit-transform: scale(0)} 
-              to {-webkit-transform: scale(1)}
-            }
-              
-            @keyframes animatezoom {
-              from {transform: scale(0)} 
-              to {transform: scale(1)}
-            }
-            
-            /* Change styles for span and cancel button on extra small screens */
-            @media screen and (max-width: 300px) {
-              span.psw {
-                 display: block;
-                 float: none;
-              }
-              .cancelbtn {
-                 width: 100%;
-              }
-            }
-        </style> 
-        
+    
         <header>
             <div id="header"> 
                 <div id="title"><h2>{{title}}</h2></div>
                 <marquee id="intro" direction="left"><big><i>Final Project for CST 336, Internet Programming, made by Joseph, Kevin, Jacob, & Michael</i></big></marquee>
-                <div id="login">
+                <div id="login-button">
                     <input type="image" 
-                           src="img/login.png" 
+                           src="img/login_icon.png" 
                            name="loginButton" 
                            class="btTxt submit" 
-                           width="200" height="40" 
-                           id="loginButton" 
                            onclick="document.getElementById('loginForm').style.display='block'"/>
                 </div>
             </div>
@@ -153,114 +28,61 @@
         <br><br>
         
         <div id="loginForm" class="modal">
-            <form class="modal-content animate" action="#" method="post">
+            <div class="modal-content animate">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('loginForm').style.display='none'" class="close" title="Close Modal">&times;</span>
-                    <img src="img/login.jpg" alt="Avatar" class="avatar">
+                    <img src="img/login.jpg" alt="login-icon" class="login-icon">
                 </div>
-                
                 <div class="container">
-                    <input type="text" id="uname" placeholder="Enter Username" name="uname" required>
+                    <input type="text" id="username" placeholder="Enter Username" name="username" required>
                     
-                    <input type="password" placeholder="Enter Password" name="psw" required>
-                
-                    <button type="submit" id="submitLogin">Login</button>
+                    <input class="form-control" id="password" type="password" name="password" placeholder="Enter Password" required>
+                   
+                    <button type="submit" id="submit-login-button">Login</button>
                     <label>
                         <input type="checkbox" checked="checked" name="remember"> Remember me
                     </label>
                 </div>
-                
                 <div class="container" style="background-color:#f1f1f1">
                     <button type="button" onclick="document.getElementById('loginForm').style.display='none'" class="cancelbtn">Cancel</button>
-                    <span class="psw">Forgot <a href="#">password?</a></span>
+                    <span class="new-here" onclick="document.getElementById('loginForm').style.display='none'; document.getElementById('createAccountForm').style.display='block'">New here? <a href="#">Create Account</a> </span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="createAccountForm" class="modal">
+            <form class="modal-content animate" action="#" method="post">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('createAccountForm').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    <img src="img/login.jpg" alt="login-icon" class="login-icon">
+                </div>
+                <div class="container">
+                    <input type="text" id="username" placeholder="Enter Username" name="username" required>
+                    <input type="password" id="password" placeholder="Enter Password" name="password" required>
+                    <button type="submit" id="create-account-button">Create Account</button>
+                </div>
+                <div class="container" style="background-color:#f1f1f1">
+                    <button type="button" onclick="document.getElementById('createAccountForm').style.display='none'" class="cancelbtn">Cancel</button>
                 </div>
             </form>
         </div>
     
+        <div id="trophy"></div>
         
-        <br><br><br><br>
+        <br><br><br><br><br><br>
         
         <div id="searchBar" style="margin:auto;max-width:800px">
-          <input type="text" placeholder="Search in Tournaments.." id="search">
-          <button type="submit" id="submit"><i class="fa fa-search"></i></button>
+          <input type="text" placeholder="Search in Tournaments.." id="search-field">
+          <button type="submit" id="search-button" onclick="search()"><i class="fa fa-search"></i></button>
         </div>   
         
         <br><br>
         
         
-        <div id="result"></div>
-        
         <div class="container-fluid" style="margin-top: 30px"></div>
         
+        <script src="js/functions.js"></script>
         
-        <script>
-        
-        $(document).ready(function() {
-                $("#search").focus;
-            });
-            // Logging in (modal)...
-            var modal = document.getElementById('loginForm');
-        
-            // Close when the user clicks anywhere outside of the modal
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            };
-            // end -------------------------------------------------------------
-            
-            // array used as an example, data will come from a DB
-            let tournaments = [{name: "Mortal Kombat",
-                                tournamentManager: "Shao Kahn",
-                                numOfPlayers: 12},
-                               {name: "Super Smash Bros.",
-                                tournamentManager: "Mario",
-                                numOfPlayers: 8}, 
-                               {name: "Street Fighter",
-                                tournamentManager: "Ryu",
-                                numOfPlayers: 14}, 
-                               {name: "Mario Kart",
-                                tournamentManager: "Wario",
-                                numOfPlayers: 7}];
-            
-            $("#submit").on("click", search);
-            
-  
-            
-            function search() {
-              $(".container-fluid").empty();
-                        
-              let keyword = $("#search").val();
-              
-              if(keyword != "") {
-                  $(`<div class="table-row header">
-                            <div class="text" style="width: 20%">Tournament Name</div>
-                            <div class="text" style="width: 20%">Tournament Manager</div>
-                            <div class="text" style="width: 60%">Number of Players</div>
-                        </div>`).appendTo(".container-fluid"); 
-                        
-                  for (let i = 0; i < tournaments.length; i++) {
-                      if (tournaments[i].name.includes(keyword)) {
-                        $(`<div class="table-row">
-                                       <div id="tournamentName" class="text" style="width: 20%">
-                                           ${tournaments[i].name}
-                                       </div>
-                                       <div class="text" style="width: 20%">${tournaments[i].tournamentManager}</div>
-                                       <div class="text" style="width: 60%">${tournaments[i].numOfPlayers}</div>
-                                   </div>`).appendTo(".container-fluid"); 
-                        return;
-                      }
-                  }
-                  $(".container-fluid").empty();
-                  $(".container-fluid").append("tournament not found");
-                  return;
-                } else {
-                    alert("Please fill in empty fields");
-                     return;
-                }
-            }
-  
-        </script>
     </body>
 </html>
 
