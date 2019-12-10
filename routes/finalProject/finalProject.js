@@ -18,9 +18,8 @@ router.get('/bracketing', function(req, res) {
        title: 'Tournament Brackets',
        game: '?',
     }); 
-    
 });
-// <<<<<<< HEAD=======
+    
 router.post('/', function(req, res) {
 
     console.log('inside login post');
@@ -76,6 +75,4 @@ router.get('/logout', function(req, res) {
     });
 });
 
-
->>>>>>> fb021fdca79325e9752686ba7f14c7b4f08bb552
 module.exports = router;
