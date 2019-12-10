@@ -1,0 +1,1226 @@
+<html>
+    <head>
+        <title>Tournament Bracket</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    </head>
+    <body>
+        <style>
+          body {
+            line-height:1
+          }
+          article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display:block }
+          nav ul{ list-style:none }
+          ins{ background-color:#ff9;color:#000;text-decoration:none }
+          mark{ background-color:#ff9;color:#000;font-style:italic;font-weight:bold }
+          del{ text-decoration:line-through }
+          abbr[title], dfn[title]{ border-bottom:1px dotted;cursor:help }
+          table{border-collapse:collapse;border-spacing:0}
+          hr{ display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0 }
+          input, select{ vertical-align:middle }
+          strong{ font-weight: bold; }
+          h1{ font-size: 2em; }
+          a, a:link, a:visited {
+              color: #0099bd;
+          }
+          a:hover {
+          	color: #03708a;
+          }
+          body {
+              padding: 210px 0 30px 0;
+              font-family: arial;
+              user-select: none;
+          }
+          body.hideMenu {
+              padding: 30px 0 30px 0;	
+          }
+          .navigation {display: none;}
+          h1 {
+              margin: 10px 0 10px;
+              font-size: 20px;
+          }
+          h2{margin: 20px 0 10px;font-size: 17px;}
+          h3{margin: 20px 0 5px;font-size: 15px;}
+          p, ul, ol {
+              margin: 0 0 10px;
+              font-size: 13px;
+              line-height: 16px;
+          }
+          ol {
+              padding: 0;
+              margin: 0 0 10px 30px;
+          }
+          input {
+              outline: none;
+              font-weight: bold;
+              border: none;
+              user-select: text;
+              border-radius: 0;
+          }
+          input#embedCode {
+              font-weight: normal;
+              font-size: 12px;
+              line-height: 17px;
+              padding: 0px 5px;
+              width: 450px;
+              box-shadow: -12px 0px 8px -8px #000 inset;
+          }
+          
+          input.error {
+              background: #f35959 !important;
+              text-shadow: 0px 0px 3px #FFF;
+              color: #000;
+          }
+          .showwinner .winner .score {
+              background: #d2a170 !important;
+          }
+          .showwinner .loser .team, .showwinner .loser .score {
+          	opacity: 0.65;
+          }
+          
+          a#more, a#menu {
+              position: absolute;
+              color: black;
+              text-decoration: none;
+              padding: 30px;
+              right: 0;
+              bottom: 0;
+              cursor: pointer;
+              opacity: 0.6;
+          	z-index: 9;
+          }
+          
+          a#more:hover, a#menu:hover {
+          	opacity: 1;
+          }
+          a#smallLogo {
+              position: absolute;
+              top: 10px;
+              left: 10px;
+              z-index: 3;
+              color: #616d79;
+              font-size: 14px;
+              text-decoration: none;
+          }
+          a#smallLogo:hover {
+          	color: #000;
+          }
+          a#menu {
+              top: 0px;
+              bottom: auto;
+              font-size: 40px;
+              font-weight: normal;
+              z-index: 5;
+              padding: 10px 20px;
+          }
+          #wrapSettings {
+          	z-index: 4;
+          	overflow: hidden;
+              font-weight: bold;
+              width: 100%;
+              padding: 20px 0 5px;
+              background: #c5d6e6;
+              margin: 0px auto 20px;
+              border-radius: 0px;
+              color: #616d79;
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 160px;
+          }
+          #teams-handle {
+          	width: 3em;
+          	height: 1.6em;
+          	top: 50%;
+          	margin-top: -.8em;
+          	text-align: center;
+          	line-height: 1.6em;
+          	
+          	background: #616d79;
+              color: #FFF;
+          	border: none;
+          	cursor: e-resize;
+          }
+          #title {
+              text-align: center;
+              display: block;
+              border: none;
+              background: transparent;
+              width: 96%;
+              margin: auto;
+              font-weight: bold;
+              font-size: 20px;
+              color: #616d79;
+          	display: none;
+          }
+          .name {
+          	width: 100px;
+          	display: inline-block;
+          	color: #545c65;
+          }
+          .input {
+          	width: 200px;
+          	display: inline-block;	
+          }
+          #wrapTournament {
+          	margin: 0px auto;
+          	text-align: center;
+          	font-weight: bold;
+          }
+          #scrollTournament {
+          	overflow-x: auto;
+          	width: 100%;
+          }
+          #tournament {
+              display: inline-block;
+              text-align: left;
+          	min-width: 575px;
+          	padding: 10px;
+          	opacity: 0.2;
+          }
+          #tournament > div {
+          	display: block;
+          	clear: both;
+          }
+          #tournament > div > div > span {
+              color: #000;
+              display: none;
+              height: 35px;
+              line-height: 35px;
+              font-size: 35px;
+              cursor: pointer;
+              text-shadow: 2px 2px 0 #FFF, 2px -2px 0 #FFF, -2px 2px 0 #FFF, -2px -2px 0 #FFF, 2px 0px 0 #FFF, 0px 2px 0 #FFF, -2px 0px 0 #FFF, 0px -2px 0 #FFF;
+          }
+          #tournament > div > div:hover > span, #tournament > div > div.focused > span {
+          	display: block;
+          }
+          .narrow #tournament > div > div > span {
+          	height: 25px;
+          	line-height: 25px;
+          	font-size: 25px;
+          }
+          #tournament > div > div {
+              width: 200px;
+              /*outline: 1px solid #0000001f;*/
+              float: left;
+          	position: relative;
+              height: 35px;
+              padding: 5px 0;
+          }
+          #tournament > div > div.down {
+          	padding: 10px 0 0 0;
+          }
+          #tournament > div > div.up {
+          	padding: 0 0 10px 0;
+          }
+          #tournament > div > div input {
+              width: 73%;
+              display: inline-block;
+              background: #c2d7ec;
+              border: none;
+              height: 35px;
+              text-align: left;
+              outline: none;
+              font-size: 14px;
+              padding: 0 0 0 3%;
+              float: left;
+          }
+          #tournament > div > div.up input {
+              box-shadow: 0px 1px 0px inset #9fadbb;
+          }
+          #tournament > div > div.down input {
+              box-shadow: 0px -1px 0px inset #9fadbb;
+          }
+          #tournament > div > div input:nth-child(2) {
+              width: 24%;
+              float: right;
+              background: #9fadbb;
+              text-align: center;
+              padding: 0;
+          }
+          #tournament > div > div:nth-child(2n+1) {
+          	width: 27px !important;
+          }
+          
+          .hidescore #tournament > div > div input:nth-child(1) {
+          	width: 97%;
+          }
+          .hidescore #tournament > div > div input:nth-child(2) {
+          	display: none;
+          }
+          
+          #tournament > div > div.final input:nth-child(2n+1) {
+              width: 98%;
+              outline: none;
+              box-shadow: 0px 0px 0px 2px #9fadbb;
+          }
+          #tournament > div > div.first input {
+              width: 100%;
+              text-align: center;
+              background: #616d79;
+              color: #FFF;
+          }
+          #tournament > div > div.first {
+              padding: 10px 0 0 0;
+          }
+          #tournament > div:nth-child(2n) div.first {
+              padding: 0 0 10px 0;
+          }
+          
+          .venue {
+              position: absolute;
+              top: -8px;
+              left: 0;
+              right: 0px;
+          	display: none;
+          }
+          .showvenue .venue {
+          	display: block;
+          }
+          #tournament > div > div input.info {
+              font-weight: normal;
+              box-shadow: none;
+              width: 97%;
+              background: transparent;
+              height: 20px;
+          }
+          
+          .z0, .z1, .z2, .z3, .z4, .z5, .z6, .z7, .z8, .z9, .z10, .z11, .z12, .z13 {
+              opacity: 0.6;
+              text-align: center;
+          }
+          
+          .final {
+              top: 22px;
+              z-index: 99;
+          	display: none;
+          }
+          .final input {
+          	text-align: center !important;
+          }
+          .show2 .row1 .final, 
+          .show4 .row2 .final, 
+          .show8 .row4 .final, 
+          .show16 .row8 .final, 
+          .show32 .row16 .final {	display: block;	}
+          
+          .s4, .s8, .s16, .s32 {	display: none !important;	}
+          .show32 .s2, .show32 .s4, .show32 .s8, .show32 .s16, .show32 .s32 {
+          	display: block !important;
+          }
+          .show16 .s2, .show16 .s4, .show16 .s8, .show16 .s16 {
+          	display: block !important;
+          }
+          .show8 .s2, .show8 .s4, .show8 .s8 {
+          	display: block !important;
+          }
+          .show4 .s2, .show4 .s4 {
+          	display: block !important;
+          }
+          .row {
+              margin: 20px 0;
+              position: relative;
+          }
+          .shiftDown {
+          	top: -30px;
+          	opacity: 0;
+          }
+          .checkbox {
+          	opacity: 0.8;
+          }
+          .checkbox.active {
+          	opacity: 1;
+          }
+          .checkbox, .button {
+              display: inline-block;
+              background: url(sprite.png) no-repeat 9px -37px #616d79;
+              color: #FFF;
+              padding: 5px 10px 5px 30px;
+              font-size: 13px;
+              cursor: pointer;
+              margin: 3px 5px;
+              border-radius: 10px;
+          }
+          
+          .flashit {
+          	background-color: #a8a9ab;
+          }
+          .hiddenfinalwinner .final, .hiddenfinalwinner .winnerLabel,
+          .show2 .hiddenfinalwinner .row1 .z10, .show4 .hiddenfinalwinner .row2 .z10, .show8 .hiddenfinalwinner .row4 .z10, .show16 .hiddenfinalwinner .row8 .z10, .show32 .hiddenfinalwinner .row16 .z10,
+          .show2 .hiddenfinalwinner .row2 .z1, .show4 .hiddenfinalwinner .row3 .z6, .show8 .hiddenfinalwinner .row5 .z6, .show16 .hiddenfinalwinner .row9 .z6, .show32 .hiddenfinalwinner .row17 .z6 {
+          	display: none !important;
+          }
+          .button {
+          	background-image: none;
+          	padding: 5px 10px 5px 10px;
+          }
+          .checkbox.active, .button:active {
+          	background-position: 9px 3px;
+          }
+          .checkbox:hover, .ui-slider-handle:hover, .button:hover {
+          	background-color: #304963 !important;
+          }
+          .hidescore #autoadvance {
+          	opacity: 0.3;
+          }
+          .first {
+          	display: none;
+          }
+          .ordered .first {
+          	display: block;
+          }
+          .above {
+          	position: absolute;
+          	top: -10px;
+          }
+          
+          .narrow #tournament > div > div input.info {
+              height: 13px;
+              font-size: 0.8em;
+          }
+          .narrow .venue {
+          top: -5px;
+          }
+          .narrow #tournament > div > div {
+          	position: relative;
+              height: 20px;
+              padding: 5px 0;
+          }
+          .narrow #tournament > div > div.down {
+          	padding: 5px 0 0 0;
+          }
+          .narrow #tournament > div > div.up {
+          	padding: 0 0 5px 0;
+          }
+          .narrow #tournament > div > div input {
+              border: none;
+              height: 25px;
+          }
+          .narrow #tournament > div > div.first {
+          	    padding: 5px 0 0 0;
+          }
+          .narrow #tournament > div:nth-child(2n) div.first {
+              padding: 0 0 5px 0;
+          }
+          .narrow .final {
+              top: 13px;
+          }
+          
+          #tournament > div.rounds > div {
+              text-align: center;
+              color: #616d79;
+              height: 20px;
+              padding: 0;
+          }
+          #tournament > div.rounds {
+          	display: none;
+          }
+          
+          @media screen and (max-width: 1500px) {
+          	.show32 #tournament > div > div {
+          		width: 168px;
+          	}
+          }
+          
+          @media screen and (max-width: 1250px) {
+          	.show32 #tournament > div > div {
+          		width: 123px;
+          	}	
+          	.show16 #tournament > div > div {
+          		width: 157px;
+          	}	
+          	#logo img {
+          		width: 63px;
+          	}
+          	a#more {
+          		padding: 20px;
+          	}
+          	a#logo {
+          		position: absolute;
+          		left: 10px;
+          		top: 20px;
+          		bottom: 10px;
+          	}
+          	.checkbox, .button {
+          		padding: 5px 5px 5px 28px;
+          		font-size: 12px;
+          		margin: 3px 2px;
+          	}
+          	.button {
+          		padding: 5px 5px 5px;
+          	}
+          	.row {
+          		margin: 14px 50px 15px 80px;
+          	}
+          	a#more {
+          		display: none;
+          	}
+          }
+          
+          
+          @media screen and (max-width: 980px) {
+          	.show32 #tournament > div > div {
+          		width: 104px;
+          	}	
+          	.show16 #tournament > div > div {
+          		width: 118px;
+          	}		
+          	.show8 #tournament > div > div {
+          		width: 155px;
+          	}		
+          	#tournament > div > div:nth-child(2n+1) {
+          		width: 16px !important;
+          	}
+          	input#embedCode {
+          		width: 200px;
+          	}
+          }
+          
+          @media screen and (max-width: 777px) {
+          	.show16 #tournament > div > div {
+          		width: 89px;
+          	}		
+          	.show8 #tournament > div > div {
+          		width: 118px;
+          	}	
+          	.show4 #tournament > div > div {
+          		width: 155px;
+          	}	
+          	.show32 #tournament > div > div {
+          		width: 78px;
+          	}
+          }
+          
+          @media screen and (max-width: 630px) {
+          	#wrapSettings {
+          		height: 200px;
+          	}
+          	body {
+          		padding-top: 240px;
+          	}
+          	.row {
+          		margin: 0px 50px 20px 10px;
+          	}
+          	a#logo {
+          		display: none;
+          	}
+          }
+          
+          @media screen and (max-width: 450px) {
+          	.name {
+          		display: none;
+          	}
+          	a#menu {
+          		padding: 5px 10px;
+          	}
+          	.row {
+          		margin: 0px 40px 8px 10px;
+          	}
+          	.input {
+          		width: 150px;
+          	}
+          }
+        </style>
+        <div id="wrapTournament" class="show-8">
+            <div id="wrapSettings">
+                <div class="row shiftDown">
+                    <div class="name">
+                        Number of Players:
+                    </div>
+                    <div class="input">
+                        <div id="teamslider">
+                            <div id="teams-handle" class="ui slider-handle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a id="menu">
+                &equiv;
+            </a>
+            <input type="text" id="title" value="Championships"/>
+            <div id="scrollTournament">
+                <div id="tournament">
+                    <div class="row1">
+                        <div class="first"><input type="text" class="order"/></div>
+                        <div class="down" data-o="1"><input type="text" class="team"/><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+                        <div class="z10"><span data-t="home2-1">&raquo;</span></div>
+					          <div class="final"><input type="text"></div>
+                    </div>
+                    <div class="row2">
+                      <div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="1"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z1"><span data-t="home2-1">&raquo;</span></div>
+            					<div class="s4 down" data-o="1"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="s4 z10"><span data-t="home3-1">&raquo;</span></div>
+            					<div class="final"><input type="text"></div>
+                    </div>
+                    
+                    <div class="s4 row3">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="2"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z2"><span data-t="visitor2-1">&raquo;</span></div>
+            					<div class="up" data-o="1"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z6"><span data-t="home3-1">&raquo;</span></div>
+        				    </div>
+				    
+            				<div class="s4 row4">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="2"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor2-1">&raquo;</span></div>
+            					<div></div>
+            					<div class="s8 z8"></div>
+            					<div class="s8 down" data-o="1"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="s8 z10"><span data-t="home4-1">&raquo;</span></div>
+            					<div class="final"><input type="text"></div>
+        				    </div>
+        				    
+        				    <div class="s8 row5">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="3"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z0"><span data-t="home2-2">&raquo;</span></div>
+            					<div></div>
+            					<div class="z9"></div>
+            					<div class="up" data-o="1"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z6"><span data-t="home4-1">&raquo;</span></div>
+        				    </div>
+        				    
+        				    <div class="s8 row6">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="3"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z1"><span data-t="home2-2">&raquo;</span></div>
+            					<div class="down" data-o="2"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z7"><span data-t="visitor3-1">&raquo;</span></div>
+            					<div></div>
+            					<div class="s16 z5"></div>
+        				    </div>
+        				    
+        				    <div class="s8 row7">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="4"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z2"><span data-t="visitor2-2">&raquo;</span></div>
+            					<div class="up" data-o="2"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor3-1">&raquo;</span></div>
+            					<div></div>
+            					<div class="s16 z5"></div>
+        				    </div>
+        				    
+            				<div class="s8 row8">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="4"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor2-2">&raquo;</span></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div class="s16 z8"></div>
+            					<div class="s16 down" data-o="1"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="s16 z10"><span data-t="home5-1">&raquo;</span></div>
+            					<div class="final"><input type="text"></div>
+        				    </div>
+        				    <div class="s16 row9">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="5"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z0"><span data-t="home2-3">&raquo;</span></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div class="z9"></div>
+            					<div class="up" data-o="1"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z6"><span data-t="home5-1">&raquo;</span></div>
+        				    </div>
+        				    
+        				    <div class="s16 row10">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="5"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z1"><span data-t="home2-3">&raquo;</span></div>
+            					<div class="down" data-o="3"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z0"><span data-t="home3-2">&raquo;</span></div>
+            					<div></div>
+            					<div class="z5"></div>
+            					<div></div>
+            					<div class="s32 z5"></div>
+        				    </div>
+        				    
+        				    <div class="s16 row11">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="6"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z2"><span data-t="visitor2-3">&raquo;</span></div>
+            					<div class="up" data-o="3"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z6"><span data-t="home3-2">&raquo;</span></div>
+            					<div></div>
+            					<div class="z5"></div>
+            					<div></div>
+            					<div class="s32 z5"></div>
+        				    </div>
+        				    
+        				    <div class="s16 row12">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="6"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor2-3">&raquo;</span></div>
+            					<div></div>
+            					<div class="z8"></div>
+            					<div class="down" data-o="2"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z7"><span data-t="visitor4-1">&raquo;</span></div>
+            					<div></div>
+            					<div class="s32 z5"></div>
+        				    </div>
+        				    
+        				    <div class="s16 row13">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="7"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z0"><span data-t="home2-4">&raquo;</span></div>
+            					<div></div>
+            					<div class="z9"></div>
+            					<div class="up" data-o="2"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor4-1">&raquo;</span></div>
+            					<div></div>
+            					<div class="s32 z5"></div>
+        				    </div>
+        				    
+        				    <div class="s16 row14">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="7"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z1"><span data-t="home2-4">&raquo;</span></div>
+            					<div class="down" data-o="4"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z7"><span data-t="visitor3-2">&raquo;</span></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div class="s32 z5"></div>
+        				    </div>
+        				    
+        				    <div class="s16 row15">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="8"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z2"><span data-t="visitor2-4">&raquo;</span></div>
+            					<div class="up" data-o="4"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor3-2">&raquo;</span></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div class="s32 z5"></div>
+        				    </div>
+        				    
+        				    <div class="s16 row16">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="8"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor2-4">&raquo;</span></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div class="s32 z8"></div>
+            					<div class="s32 down" data-o="1"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="s32 z10"><span data-t="winner15">&raquo;</span></div>
+            					<div class="s32 final"><input type="text"></div>
+        				    </div>
+        				    
+        				    <div class="s32 row17">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="9"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z0"><span data-t="home2-5">&raquo;</span></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div class="z9"></div>
+            					<div class="up" data-o="1"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z6"><span data-t="winner15">&raquo;</span></div>
+        				    </div>
+        				    
+        				    <div class="s32 row18">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="9"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z1"><span data-t="home2-5">&raquo;</span></div>
+            					<div class="down" data-o="5"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z0"><span data-t="home3-3">&raquo;</span></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div class="z5"></div>
+        				    </div>
+        				    
+        				    <div class="s32 row19">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="10"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z2"><span data-t="visitor2-5">&raquo;</span></div>
+            					<div class="up" data-o="5"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z6"><span data-t="home3-3">&raquo;</span></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div class="z5"></div>
+        				    </div>
+        				    
+        				    <div class="s32 row20">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="10"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor2-5">&raquo;</span></div>
+            					<div></div>
+            					<div class="z8"></div>
+            					<div class="down" data-o="3"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z0"><span data-t="home4-2">&raquo;</span></div>
+            					<div></div>
+            					<div class="z5"></div>
+        				    </div>
+        				    
+        				    <div class="s32 row21">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="11"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z0"><span data-t="home2-6">&raquo;</span></div>
+            					<div></div>
+            					<div class="z9"></div>
+            					<div class="up" data-o="3"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z6"><span data-t="home4-2">&raquo;</span></div>
+            					<div></div>
+            					<div class="z5"></div>
+        			    	</div>
+        			    	
+        			    	<div class="s32 row22">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="11"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z1"><span data-t="home2-6">&raquo;</span></div>
+            					<div class="down" data-o="6"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z7"><span data-t="visitor3-3">&raquo;</span></div>
+            					<div></div>
+            					<div class="z5"></div>
+            					<div></div>
+            					<div class="z5"></div>
+        				    </div>
+        				    
+        				    <div class="s32 row23">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="12"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z2"><span data-t="visitor2-6">&raquo;</span></div>
+            					<div class="up" data-o="6"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor3-3">&raquo;</span></div>
+            					<div></div>
+            					<div class="z5"></div>
+            					<div></div>
+            					<div class="z5"></div>
+        				    </div>
+        				    
+        				    <div class="s32 row24">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="12"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor2-6">&raquo;</span></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div class="z8"></div>
+            					<div class="down" data-o="2"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z7"><span data-t="visitor5-1">&raquo;</span></div>
+        				    </div>
+        				    
+        				    <div class="s32 row25">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="13"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z0"><span data-t="home2-7">&raquo;</span></div>
+            					<div></div>
+            					<div></div>
+            					<div></div>
+            					<div class="z9"></div>
+            					<div class="up" data-o="2"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor5-1">&raquo;</span></div>
+        				    </div>
+        				    
+        				    <div class="s32 row26">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="13"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z1"><span data-t="home2-7">&raquo;</span></div>
+            					<div class="down" data-o="7"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z0"><span data-t="home3-4">&raquo;</span></div>
+            					<div></div>
+            					<div class="z5"></div>
+        				    </div>
+        				    
+        				    <div class="s32 row27">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="14"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z2"><span data-t="visitor2-7">&raquo;</span></div>
+            					<div class="up" data-o="7"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z6"><span data-t="home3-4">&raquo;</span></div>
+            					<div></div>
+            					<div class="z5"></div>
+        				    </div>
+        				    
+        				    <div class="s32 row28">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="14"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z6"><span data-t="visitor2-7">&raquo;</span></div>
+            					<div></div>
+            					<div class="z8"></div>
+            					<div class="down" data-o="4"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z7"><span data-t="visitor4-2">&raquo;</span></div>
+        				    </div>
+        				    
+        				    <div class="s32 row29">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="15"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z0"><span data-t="home2-8">&raquo;</span></div>
+            					<div></div>
+            					<div class="z9"></div>
+            					<div class="up" data-o="4"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor4-2">&raquo;</span></div>
+        				    </div>
+        				    
+        				    <div class="s32 row30">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="15"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z1"><span data-t="home2-8">&raquo;</span></div>
+            					<div class="down" data-o="8"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z7"><span data-t="visitor3-4">&raquo;</span></div>
+        				    </div>
+        				    
+        				    <div class="s32 row31">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="down" data-o="16"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            					<div class="z2"><span data-t="visitor2-8">&raquo;</span></div>
+            					<div class="up" data-o="8"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor3-4">&raquo;</span></div>
+            				</div>
+                    
+            				<div class="s32 row32">
+            					<div class="first"><input type="text" class="order" /></div>
+            					<div class="up" data-o="16"><input type="text" class="team" /><input type="text" class="score" /></div>
+            					<div class="z0"><span data-t="visitor2-8">&raquo;</span></div>
+            				</div>
+            				
+            				<div class="rounds">
+            					<div class="s32"></div>
+            					<div class="s32">16th-finals</div>
+            					<div class="s16"></div>
+            					<div class="s16">8th-finals</div>
+            					<div class="s8"></div>
+            					<div class="s8">Quarterfinals</div>
+            					<div class="s4"></div>
+            					<div class="s4">Semifinals</div>
+            					<div class="s4"></div>
+            					<div class="s4">Final</div>
+            					<div class="s4 winnerLabel"></div>
+            					<div class="s4 winnerLabel">Winner</div>
+        				    </div>
+                </div>
+            </div>
+        </div>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133321496-1"></script>
+        <script>
+            var rounds = 3;
+            var i = 0;
+            $(function() {
+              var handle = $( "#teams-handle" );
+              $( "#teamslider" ).slider({
+              min: 1, // min value
+              max: 5, // max value
+              step: 1,
+              value: rounds,
+                create: function() {
+                  handle.text(Math.pow(2, rounds));
+                },
+                slide: function(event, ui) {
+                	rounds = ui.value;
+                	updateRoundNumber(rounds);
+                }
+              });
+            });
+            
+            function updateRoundNumber(validRound) {
+            	rounds = validRound;
+            	$("#teamslider").slider('value',rounds);
+            	$("#teams-handle").text(Math.pow(2, rounds));
+            	$("#wrapTournament").removeClass();
+            	$("#wrapTournament").addClass("show" + Math.pow(2, rounds));
+            	if (rounds > 4 ) {
+            		$("#wrapTournament").addClass('narrow');
+            	}
+            	if (rounds == 1 ) {
+            		$("#showrounds").css("opacity", 0.3);
+            	} else {
+            		$("#showrounds").css("opacity", 1);
+            	}
+            	updateNumberOfGames();
+            }
+            
+            function updateNumberOfGames() {
+            	var game = 0;	
+            	for (i = 1; i < 6; i++) {
+            		$(".down input.team").each(function() {
+            			if ($(this).parent().attr("data-r") == i) {	
+            				if (Math.round($(this).parent().parent().index() / 2) < Math.pow(2, rounds) / 2) {
+            					game++;
+            					if (!isNaN($(this).parent().find("input.info").val()) && (Number($(this).parent().find("input.info").val()) < 32)) {
+            						$(this).parent().find("input.info").val(game);
+            					}
+            				}
+            			}
+            		});		
+            	}
+            }
+            
+            $(document).ready(function() {
+            	
+            	$("input.team").each(function() {
+            		$(this).parent().attr("data-r", ($(this).parent().index() + 1) / 2);	// r - round	o - hanyadik meccs abban a roundban
+            
+            	});
+            	$("input.info").each(function() {
+            		$(this).attr("id",'ve' + $(this).parent().parent().attr("data-r") + '-' + $(this).parent().parent().attr("data-o"));
+            	});	
+            	
+            	$(".down input.team").each(function() {
+            		$(this).attr("id",'home' + $(this).parent().attr("data-r") + '-' + $(this).parent().attr("data-o"));
+            	});
+            	$(".up input.team").each(function() {
+            		$(this).attr("id",'visitor' + $(this).parent().attr("data-r") + '-' + $(this).parent().attr("data-o"));
+            	});	
+            	$(".down input.score").each(function() {
+            		$(this).attr("id",'hs' + $(this).parent().attr("data-r") + '-' + $(this).parent().attr("data-o"));
+            		$(this).attr("data-pair",'vs' + $(this).parent().attr("data-r") + '-' + $(this).parent().attr("data-o"));		
+            	});
+            	$(".up input.score").each(function() {
+            		$(this).attr("id",'vs' + $(this).parent().attr("data-r") + '-' + $(this).parent().attr("data-o"));
+            		$(this).attr("data-pair",'hs' + $(this).parent().attr("data-r") + '-' + $(this).parent().attr("data-o"));				
+            	});
+            	
+            	$(".final input").each(function() {
+            		$(this).attr("id",'winner' + $(this).parent().parent().index());
+            	});
+            	$(".first input").each(function() {
+            		i++;
+            		$(this).val(i);
+            	});
+            	
+            	i = 0;
+            	updateNumberOfGames();
+            	
+            	$(".checkbox").click(function() {
+            		$(this).toggleClass("active");
+            		
+            		var idBox = $(this).attr("id");
+            		
+            		if (idBox == "ordered") {
+            			$("#tournament").toggleClass('ordered');
+            		}
+            		if (idBox == "showscore") {
+            			$("body").toggleClass('hidescore');
+            		}
+            		if (idBox == "showrounds") {
+            			$(".rounds").fadeToggle(300);
+            		}
+            		if (idBox == "toggleTitle") {
+            			$("#title").fadeToggle(300).focus();
+            		}
+            		if (idBox == "hlwinner") {
+            			$("#tournament").toggleClass('showwinner');
+            		}
+            		
+            		if (idBox == "showvenue") {
+            			$("#tournament").toggleClass('showvenue');
+            			if (window.innerWidth > 1025) {
+            				$(".row1 input.info").focus();
+            			}
+            		}
+            		if (idBox == "finalwinner") {
+            			$("#tournament").toggleClass('hiddenfinalwinner');
+            		}
+            		
+            	});
+            	
+            	$("#tournament > div > div > span").click(function() {
+            		$("#" + $(this).attr("data-t")).val($(this).parent().prev().find("input.team").val());
+            		updateWinners();
+            		$(this).parent().prev().removeClass("loser").addClass("winner");	
+            		$("#" + $(this).parent().prev().find("input.score").attr("data-pair")).parent().removeClass("winner").addClass("loser");	
+            	});
+            	
+            	$("#home2-1, #home3-1, #home4-1, #home5-1").change(function() {
+            		updateWinners();
+            	});
+            	
+            	$("input.team").focus(function() {
+            		$(this).parent().next().addClass("focused");
+            	});		
+            	$("input.team").focusout(function() {
+            		$("#tournament > div > div").removeClass("focused");
+            	});
+
+            	$("input.score").bind("keyup change", function(e) {
+            		var scoreA = $(this).val();
+            		if (scoreA == "") {scoreA = 0;}
+            		if (isNaN(scoreA)) {
+            			$(this).addClass('error');
+            		} else {			
+            			$(this).parent().removeClass("winner loser");
+            			$("#"+$(this).attr("data-pair")).parent().removeClass("winner loser");
+            			
+            			$(this).removeClass('error');
+            			scoreA = Number(scoreA);
+            			
+            			var scorB = $("#"+$(this).attr("data-pair")).val();
+            			if (scoreA == "") {scoreA = 0;}
+            			if (!isNaN(scorB)) {
+            				scorB = Number(scorB);
+            				if ((scoreA != scorB) && ($(this).val() != "") && ($("#"+$(this).attr("data-pair")).val() != "")) {
+            					if (scoreA > scorB) {						
+            						if ($("#autoadvance").hasClass("active")) {		
+            							var team = $(this).parent().find("input.team").val();
+            							var destination = "#" + $(this).parent().next().find("span").attr("data-t");	
+            							$(destination).val(team);
+            						}						
+            					} else {						
+            						if ($("#autoadvance").hasClass("active")) {	
+            							var team = $("#"+$(this).attr("data-pair")).prev().val();	
+            							var destination = "#" + $(this).parent().next().find("span").attr("data-t");
+            							
+            						// 	console.log(destination, team);
+            							$(destination).val(team);
+            						}	
+            					}
+            				}
+            			}
+            		}
+            		updateWinners();
+            	});
+        
+            	if (window.innerWidth > 1025) {
+            		$(".row1 input.team").focus();
+            		setTimeout(function () {
+            			$(".row1 > div").removeClass("focused");
+            		}, 200);
+            	}
+            
+            	$("#menu").click(function() {
+            		$("#wrapSettings").fadeToggle(333,function(){
+            			$("body").toggleClass("hideMenu");
+            		});
+            	});
+            	
+            	$("#erase").click(function() {
+            		$("input.team, input.score").val("");
+            		$("#tournament > div > div").removeClass("winner");
+            		$("#tournament > div > div").removeClass("loser");
+            		$("#title").val("");
+            		updateNumberOfGames();
+            		updateWinners();
+            	});
+            	
+            	$("#erasescore").click(function() {
+            		$("input.score").val("");
+            		$("#tournament > div > div").removeClass("winner");
+            		$("#tournament > div > div").removeClass("loser");
+            		$("#title").val("");
+            		updateNumberOfGames();
+            		updateWinners();
+            	});
+              
+            	$("#shuffleteams").click(function() {
+            		for (i = 0; i < 200; i++) {
+            			var rand = Math.floor(Math.random() * Math.pow(2, rounds) / 2) + 1;
+            			var rand2 = Math.floor(Math.random() * Math.pow(2, rounds) / 2) + 1;
+            			
+            			var t1 = "home";
+            			if (Math.floor(Math.random() * 2) == 1) {	t1 = "visitor";	}
+            			var t2 = "home";
+            			if (Math.floor(Math.random() *2 ) == 1) {	t2 = "visitor";	}
+            			
+            			t1 = "#" + t1 + "1-" + rand;
+            			t2 = "#" + t2 + "1-" + rand2;
+            			
+            			var seg = $(t1).val();
+            			$(t1).val($(t2).val());
+            			$(t2).val(seg);
+            		}
+            	});
+            
+            // demo data
+            // 	$(".demo").click(function() {
+            // 		updateRoundNumber(3);
+            		
+            // 		$("#home1-1, #home2-1").val("Belgium");
+            // 		$("#visitor1-1").val("Mexico");
+            // 		$("#home1-2").val("Germany");
+            // 		$("#home3-1, #visitor2-1, #visitor1-2, #home4-1").val("Argentina");
+            // 		$("#home1-3, #home2-2, #visitor3-1").val("Russia");
+            // 		$("#visitor1-3").val("France");
+            // 		$("#home1-4").val("Croatia");
+            // 		$("#visitor1-4, #visitor2-2").val("England");
+            // 		$("#title").val("Example Round");
+            // 		$("#hs1-1").val(4);
+            // 		$("#vs1-1").val(1);
+            // 		$("#hs1-2").val(3);
+            // 		$("#vs1-2").val(4);
+            // 		$("#hs1-3").val(4);
+            // 		$("#vs1-3").val(2);
+            // 		$("#hs1-4").val(3);
+            // 		$("#vs1-4").val(4);
+            // 		$("#hs2-1").val(2);
+            // 		$("#vs2-1").val(4);
+            // 		$("#hs2-2").val(4);
+            // 		$("#vs2-2").val(0);
+            // 		$("#hs3-1").val(4);
+            // 		$("#vs3-1").val(2);
+            // 		updateWinners();
+            // 	});
+            	
+            	i = 1;
+            	$("input.order").each(function() {		
+            		$(this).attr("id", "ord" + i++);
+            	});
+            	
+            	i = 1;
+            	$(".button, .checkbox").each(function() {
+            		i++;
+            		flash($(this).attr("id"), i);
+            	});
+              
+            	$('#tournament, #logo').animate({
+            	opacity : '1'
+            	}, 500, function() {
+            	$('.shiftDown').animate({
+            		top: 0,
+            		opacity: 1
+            	}, 500, function() {
+            	    });
+            	});
+            });
+            
+            function updateWinners() {
+            // 	console.log("updateWinners");
+            	$("#winner0").val($("#home2-1").val());
+            	$("#winner1").val($("#home3-1").val());
+            	$("#winner3").val($("#home4-1").val());
+            	$("#winner7").val($("#home5-1").val());
+            	
+            	if ($("#hlwinner").hasClass("active")) {
+            		$(".down input.score").each(function() {
+            			var home = Number($(this).val());
+            			var visitor = Number($("#" + $(this).attr("data-pair")).val());
+            			console.log(home, ' - ', visitor)
+            			$(this).parent().removeClass("loser winner");
+            			$("#" + $(this).attr("data-pair")).parent().removeClass("loser winner");		
+            			if (home < visitor) {
+            				$(this).parent().addClass("loser");
+            				$("#" + $(this).attr("data-pair")).parent().addClass("winner");
+            			}
+            			if (home > visitor) {
+            				$(this).parent().addClass("winner");
+            				$("#" + $(this).attr("data-pair")).parent().addClass("loser");
+            			}
+            		});
+            	}
+            }
+            
+            function flash(mit, mennyit) {
+            	$("#" + mit).addClass("flashit");
+            	//console.log(mit, mennyit);
+            	setTimeout(function () {
+            		$("#" + mit).removeClass("flashit");
+            	}, 25 * mennyit + 300);
+            }
+        </script>
+    </body>
+</html>

@@ -10,4 +10,13 @@ router.get('/', function(req, res) {
     
 });
 
+// bracketing
+router.get('/bracketing', function(req, res) {
+    
+    res.render('finalProject/bracketing', {
+       title: 'Tournament Brackets',
+       game: '?',
+    }); 
+});
+
 module.exports = router;
