@@ -18,9 +18,9 @@ router.get('/bracketing', function(req, res) {
        title: 'Tournament Brackets',
        game: '?',
     }); 
+    
 });
-<<<<<<< HEAD
-=======
+// <<<<<<< HEAD=======
 router.post('/', function(req, res) {
 
     console.log('inside login post');
