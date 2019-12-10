@@ -1,8 +1,9 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+/*body {*/
+/*  padding: 50px;*/
+/*  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+/*}*/
 
+<<<<<<< HEAD
 a {
   color: #00B7FF;
 }
@@ -56,3 +57,8 @@ main{
           li.game-bottom{ 
             border-top:1px solid #aaa;
           }
+=======
+/*a {*/
+/*  color: #00B7FF;*/
+/*}*/
+>>>>>>> fb021fdca79325e9752686ba7f14c7b4f08bb552
