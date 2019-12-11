@@ -542,9 +542,16 @@
             <a id="menu">
                 &equiv;
             </a>
-            <input type="text" id="title" value="Championships"/>
+            <input type="text" id="title" value="Tournament!"/> <!-- Tournament title -->
             <div id="scrollTournament">
                 <div id="tournament">
+                    <!--  
+                    ATMOST
+                    round 1 has 8 matches
+                    round 2 has 4
+                    round 3 has 2
+                    round 4 is final round
+                    -->
                     <div class="row1">
                         <div class="first"><input type="text" class="order"/></div>
                         <div class="down" data-o="1"><input type="text" class="team" value=""/> <!-- player 1 name in value -->
@@ -824,11 +831,15 @@
             $(document).ready(function() {
                 // score is not a part of the tournament
                 $("input.score").prop('disabled', true);
+    			$(".rounds").fadeToggle(300);
+    			$("#title").fadeToggle(300).focus();
+    			$("#tournament").toggleClass('ordered');
+
             	
             	$("input.team").each(function() {
             		$(this).parent().attr("data-r", ($(this).parent().index() + 1) / 2);	
-            
             	});
+            	
             	$("input.info").each(function() {
             		$(this).attr("id",'ve' + $(this).parent().parent().attr("data-r") + '-' + $(this).parent().parent().attr("data-o"));
             	});	
@@ -859,39 +870,6 @@
             	i = 0;
             	updateNumberOfGames();
             	
-            	$(".checkbox").click(function() {
-            		$(this).toggleClass("active");
-            		
-            		var idBox = $(this).attr("id");
-            		
-            		if (idBox == "ordered") {
-            			$("#tournament").toggleClass('ordered');
-            		}
-            		if (idBox == "showscore") {
-            			$("body").toggleClass('hidescore');
-            		}
-            		if (idBox == "showrounds") {
-            			$(".rounds").fadeToggle(300);
-            		}
-            		if (idBox == "toggleTitle") {
-            			$("#title").fadeToggle(300).focus();
-            		}
-            		if (idBox == "hlwinner") {
-            			$("#tournament").toggleClass('showwinner');
-            		}
-            		
-            		if (idBox == "showvenue") {
-            			$("#tournament").toggleClass('showvenue');
-            			if (window.innerWidth > 1025) {
-            				$(".row1 input.info").focus();
-            			}
-            		}
-            		if (idBox == "finalwinner") {
-            			$("#tournament").toggleClass('hiddenfinalwinner');
-            		}
-            		
-            	});
-            	
             	$("#tournament > div > div > span").click(function() {
             		$("#" + $(this).attr("data-t")).val($(this).parent().prev().find("input.team").val());
             		updateWinners();
@@ -909,46 +887,6 @@
             	$("input.team").focusout(function() {
             		$("#tournament > div > div").removeClass("focused");
             	});
-            	
-            	
-                // will be removed, score not important
-            	$("input.score").bind("keyup change", function(e) {
-            		var scoreA = $(this).val();
-            		if (scoreA == "") {scoreA = 0;}
-            		if (isNaN(scoreA)) {
-            			$(this).addClass('error');
-            		} else {			
-            			$(this).parent().removeClass("winner loser");
-            			$("#"+$(this).attr("data-pair")).parent().removeClass("winner loser");
-            			
-            			$(this).removeClass('error');
-            			scoreA = Number(scoreA);
-            			
-            			var scorB = $("#"+$(this).attr("data-pair")).val();
-            			if (scoreA == "") {scoreA = 0;}
-            			if (!isNaN(scorB)) {
-            				scorB = Number(scorB);
-            				if ((scoreA != scorB) && ($(this).val() != "") && ($("#"+$(this).attr("data-pair")).val() != "")) {
-            					if (scoreA > scorB) {						
-            						if ($("#autoadvance").hasClass("active")) {		
-            							var team = $(this).parent().find("input.team").val();
-            							var destination = "#" + $(this).parent().next().find("span").attr("data-t");	
-            							$(destination).val(team);
-            						}						
-            					} else {						
-            						if ($("#autoadvance").hasClass("active")) {	
-            							var team = $("#"+$(this).attr("data-pair")).prev().val();	
-            							var destination = "#" + $(this).parent().next().find("span").attr("data-t");
-            							
-            						// 	console.log(destination, team);
-            							$(destination).val(team);
-            						}	
-            					}
-            				}
-            			}
-            		}
-            		updateWinners();
-            	});
         
             	if (window.innerWidth > 1025) {
             		$(".row1 input.team").focus();
@@ -962,28 +900,9 @@
             			$("body").toggleClass("hideMenu");
             		});
             	});
-            	
-            	// erase data in bracket
-            // 	$("#erase").click(function() {
-            // 		$("input.team, input.score").val("");
-            // 		$("#tournament > div > div").removeClass("winner");
-            // 		$("#tournament > div > div").removeClass("loser");
-            // 		$("#title").val("");
-            // 		updateNumberOfGames();
-            // 		updateWinners();
-            // 	});
-            	
-            	
-            // 	$("#erasescore").click(function() {
-            // 		$("input.score").val("");
-            // 		$("#tournament > div > div").removeClass("winner");
-            // 		$("#tournament > div > div").removeClass("loser");
-            // 		$("#title").val("");
-            // 		updateNumberOfGames();
-            // 		updateWinners();
-            // 	});
               
             	$("#shuffleteams").click(function() {
+            	    
             		for (i = 0; i < 200; i++) {
             			var rand = Math.floor(Math.random() * Math.pow(2, rounds) / 2) + 1;
             			var rand2 = Math.floor(Math.random() * Math.pow(2, rounds) / 2) + 1;
@@ -1002,35 +921,35 @@
             		}
             	});
             
-            // demo data
-            // 	$(".demo").click(function() {
-            // 		updateRoundNumber(3);
+                //demo data
+            	$(".demo").click(function() {
+            		updateRoundNumber(3);
             		
-            // 		$("#home1-1, #home2-1").val("Belgium");
-            // 		$("#visitor1-1").val("Mexico");
-            // 		$("#home1-2").val("Germany");
-            // 		$("#home3-1, #visitor2-1, #visitor1-2, #home4-1").val("Argentina");
-            // 		$("#home1-3, #home2-2, #visitor3-1").val("Russia");
-            // 		$("#visitor1-3").val("France");
-            // 		$("#home1-4").val("Croatia");
-            // 		$("#visitor1-4, #visitor2-2").val("England");
-            // 		$("#title").val("Example Round");
-            // 		$("#hs1-1").val(4);
-            // 		$("#vs1-1").val(1);
-            // 		$("#hs1-2").val(3);
-            // 		$("#vs1-2").val(4);
-            // 		$("#hs1-3").val(4);
-            // 		$("#vs1-3").val(2);
-            // 		$("#hs1-4").val(3);
-            // 		$("#vs1-4").val(4);
-            // 		$("#hs2-1").val(2);
-            // 		$("#vs2-1").val(4);
-            // 		$("#hs2-2").val(4);
-            // 		$("#vs2-2").val(0);
-            // 		$("#hs3-1").val(4);
-            // 		$("#vs3-1").val(2);
-            // 		updateWinners();
-            // 	});
+            		$("#home1-1, #home2-1").val("Belgium");
+            		$("#visitor1-1").val("Mexico");
+            		$("#home1-2").val("Germany");
+            		$("#home3-1, #visitor2-1, #visitor1-2, #home4-1").val("Argentina");
+            		$("#home1-3, #home2-2, #visitor3-1").val("Russia");
+            		$("#visitor1-3").val("France");
+            		$("#home1-4").val("Croatia");
+            		$("#visitor1-4, #visitor2-2").val("England");
+            		$("#title").val("Example Round");
+            		$("#hs1-1").val(4);
+            		$("#vs1-1").val(1);
+            		$("#hs1-2").val(3);
+            		$("#vs1-2").val(4);
+            		$("#hs1-3").val(4);
+            		$("#vs1-3").val(2);
+            		$("#hs1-4").val(3);
+            		$("#vs1-4").val(4);
+            		$("#hs2-1").val(2);
+            		$("#vs2-1").val(4);
+            		$("#hs2-2").val(4);
+            		$("#vs2-2").val(0);
+            		$("#hs3-1").val(4);
+            		$("#vs3-1").val(2);
+            		updateWinners();
+            	});
             	
             	i = 1;
             	$("input.order").each(function() {		
