@@ -86,6 +86,75 @@
         
         <script src="js/functions.js"></script>
         
+        <script>
+        
+        $(document).ready(function() {
+                $("#search").focus;
+            });
+            // Logging in (modal)...
+            var modal = document.getElementById('loginForm');
+        
+            // Close when the user clicks anywhere outside of the modal
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
+            // end -------------------------------------------------------------
+            
+            // array used as an example, data will come from a DB
+            let tournaments = [{name: "Mortal Kombat",
+                                tournamentManager: "Shao Kahn",
+                                numOfPlayers: 12},
+                               {name: "Super Smash Bros.",
+                                tournamentManager: "Mario",
+                                numOfPlayers: 8}, 
+                               {name: "Street Fighter",
+                                tournamentManager: "Ryu",
+                                numOfPlayers: 14}, 
+                               {name: "Mario Kart",
+                                tournamentManager: "Wario",
+                                numOfPlayers: 7}];
+            
+            $("#submit").on("click", search);
+            
+  
+            
+            function search() {
+              $(".container-fluid").empty();
+                        
+              let keyword = $("#search").val();
+              
+              if(keyword != "") {
+                  $(`<div class="table-row header">
+                            <div class="text" style="width: 20%">Tournament Name</div>
+                            <div class="text" style="width: 20%">Tournament Manager</div>
+                            <div class="text" style="width: 60%">Number of Players</div>
+                        </div>`).appendTo(".container-fluid"); 
+                        
+                  for (let i = 0; i < tournaments.length; i++) {
+                      if (tournaments[i].name.includes(keyword)) {
+                        $(`<div class="table-row">
+                                       <div id="tournamentName" class="text" style="width: 20%">
+                                           ${tournaments[i].name}
+                                       </div>
+                                       <div class="text" style="width: 20%">${tournaments[i].tournamentManager}</div>
+                                       <div class="text" style="width: 60%">${tournaments[i].numOfPlayers}</div>
+                                   </div>`).appendTo(".container-fluid"); 
+                                   
+                        return;
+                      }
+                  }
+                  $(".container-fluid").empty();
+                  $(".container-fluid").append("tournament not found");
+                  return;
+                } else {
+                    alert("Please fill in empty fields");
+                     return;
+                }
+            }
+  
+        </script>
     </body>
 </html>
 
