@@ -2,6 +2,11 @@ var express = require('express');
 var router = express.Router();
 const session = require('express-session');
 
+//create new account
+router.get("/new", function(req, res) {
+    res.render('finalProject/create_account');
+});
+
 // Home Page...
 router.get('/', function(req, res) {
         
