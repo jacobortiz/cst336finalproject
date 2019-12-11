@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const session = require('express-session');
 const mysql = require('mysql');
+const bcrypt = require('bcrypt');
 
 //create new account
 router.get("/new", function(req, res) {
@@ -75,26 +76,45 @@ router.post('/create_account', function(req, res) {
 
     console.log('inside create_account post');
 
-    const connection = mysql.createConnection({
-        host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-        user: 'u4iixpff4n2b1uam',
-        password: 'gszyw5nfp2os51lq',
-        database: 'c2cyppf6xaxjv2wy'
-    });
+    // bcrypt.hash(req.body.password, 8, function(err, hash) {
+    //     console.log("Hash: " + hash);
 
-    connection.connect();
-    
-    connection.query(
-        'INSERT INTO users(username, hash, firstName, lastName, age) VALUES (?, ?, ?, ?, ?)', [req.body.username, req.body.password, req.body.fname, req.body.lname, req.body.age],
-        (error, results, fields) => {
-            if (error) throw error;
-            res.json({
-                successful: true,
-                message: "account created"
-            });
+    //     // imagine mysql grab right here
+
+    //     bcrypt.compare('somePassword', hash, function(err, res) {
+    //         if(res) {
+    //             console.log("PASSWORD MATCHES!");
+    //         } else {
+    //             console.log("PASSWORD DOESNT MATCH");
+    //         } 
+    //       });
+    // });
+
+    bcrypt.hash(req.body.password, 8, function(err, hash) {
+
+        date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+        const connection = mysql.createConnection({
+            host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+            user: 'u4iixpff4n2b1uam',
+            password: 'gszyw5nfp2os51lq',
+            database: 'c2cyppf6xaxjv2wy'
         });
     
-    connection.end();
+        connection.connect();
+        
+        connection.query(
+            'INSERT INTO user(username, hash, firstName, lastName, age, created) VALUES (?, ?, ?, ?, ?, ?)', [req.body.username, hash, req.body.fname, req.body.lname, req.body.age, date],
+            (error, results, fields) => {
+                if (error) throw error;
+                res.json({
+                    successful: true,
+                    message: "account created"
+                });
+            });
+        
+        connection.end();
+    });
 });
 
 
