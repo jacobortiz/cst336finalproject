@@ -9,6 +9,10 @@ router.get("/new", function(req, res) {
     res.render('finalProject/create_account');
 });
 
+router.get("/create_tournament", function(req, res) {
+    res.render('finalProject/create_tournament')
+});
+
 // Home Page...
 router.get('/', function(req, res) {
     

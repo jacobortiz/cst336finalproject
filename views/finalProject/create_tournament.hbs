@@ -6,14 +6,14 @@
 <body>
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Sign up!
+        Create
     </button>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Sign Up!</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Create Tournament</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -21,38 +21,34 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Username</label>
-                        <input type="username" class="form-control" id="exampleFormControlInput1" placeholder="johnDoe123">
+                        <label for="exampleFormControlInput1">Title</label>
+                        <input type="username" class="form-control" id="exampleFormControlInput1" placeholder="Extreme Slap Down 23">
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword">Password</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                        <label for="gender">Players</label>
+                        <select class="form-control" id="amount">
+                            <option>4</option>
+                            <option>8</option>
+                            <option>16</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword">Confirm password</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">First Name</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="john">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Last Name</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="doe">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Age</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="7">
+                        <label for="exampleFormControlInput1">Zip Code</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="10101">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Create Account</button>
+                <button type="button" class="btn btn-primary">Create</button>
             </div>
             </div>
         </div>
     </div>
+
+    <script>
+        
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
