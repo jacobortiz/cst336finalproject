@@ -138,6 +138,8 @@ router.get('/logout', function(req, res) {
 
 router.post('/create_tournament', function(req, res) {
 
+    username = "kevin1";
+
     const connection = mysql.createConnection({
         host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
         user: 'u4iixpff4n2b1uam',
@@ -153,20 +155,26 @@ router.post('/create_tournament', function(req, res) {
     date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
     connection.query(
-        'INSERT INTO tournament(username, hash, firstName, lastName, age, created) VALUES (?, ?, ?, ?, ?, ?)', 
-        [req.body.username, hash, req.body.fname, req.body.lname, req.body.age, date], 
+        'INSERT INTO tournament(username, title, levels, created , zip) VALUES (?, ?, ?, ?, ?);', 
+        [username, req.body.title, req.body.levels, date, req.body.zip], 
         (error, results, fields) => {
-            if (error) throw error;
+            if (error) {
+                res.json({
+                    successful: false,
+                    message: 'could not insert into tournament table!'
+                });
+            }
+
+            console.log("Tournament Created!");
+
+            console.log(req.body.matches);
+            connection.query(
+                ''
+            );
         }
     );
 
-    connection.query(
-        'INSERT INTO user(username, hash, firstName, lastName, age, created) VALUES (?, ?, ?, ?, ?, ?)', 
-        [req.body.username, hash, req.body.fname, req.body.lname, req.body.age, date], 
-        (error, results, fields) => {
-            if (error) throw error;
-        }
-    );
+    
     
     connection.end();
 
