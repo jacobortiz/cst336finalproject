@@ -37,7 +37,7 @@ router.post('/', function(req, res) {
     else {
         // delete the user as punishment!
         delete req.session.username;
-        message = 'Wrong username or password!'
+        message = 'Wrong username or password!';
     }
 
     console.log('session username', req.session.username);

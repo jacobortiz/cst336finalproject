@@ -77,7 +77,7 @@
           .showwinner .winner .score {
               background: #d2a170 !important;
           }
-          .showwinner .loser .team, .showwinner .loser .score {
+          .showwinner .loser .team, .showwinner .loser .score .NaN {
           	opacity: 0.65;
           }
           
@@ -122,7 +122,7 @@
               font-weight: bold;
               width: 100%;
               padding: 20px 0 5px;
-              background: #c5d6e6;
+              background: #00000061;
               margin: 0px auto 20px;
               border-radius: 0px;
               color: #616d79;
@@ -220,7 +220,7 @@
           #tournament > div > div input {
               width: 73%;
               display: inline-block;
-              background: #c2d7ec;
+              background: #0000002e;
               border: none;
               height: 35px;
               text-align: left;
@@ -238,7 +238,7 @@
           #tournament > div > div input:nth-child(2) {
               width: 24%;
               float: right;
-              background: #9fadbb;
+              background: #0000004a;
               text-align: center;
               padding: 0;
           }
@@ -524,8 +524,9 @@
           		width: 150px;
           	}
           }
+          
         </style>
-        <div id="wrapTournament" class="show-8">
+        <div id="wrapTournament" class="show8">     <!-- number of players in tournament, change the number to increase / decrease players only works for (2^n) numbers -->
             <div id="wrapSettings">
                 <div class="row shiftDown">
                     <div class="name">
@@ -548,363 +549,191 @@
                         <div class="first"><input type="text" class="order"/></div>
                         <div class="down" data-o="1"><input type="text" class="team"/><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
                         <div class="z10"><span data-t="home2-1">&raquo;</span></div>
-					          <div class="final"><input type="text"></div>
+					    <div class="final"><input type="text"></div>
                     </div>
+                    
                     <div class="row2">
-                      <div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="1"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z1"><span data-t="home2-1">&raquo;</span></div>
-            					<div class="s4 down" data-o="1"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="s4 z10"><span data-t="home3-1">&raquo;</span></div>
-            					<div class="final"><input type="text"></div>
-                    </div>
+                        <div class="first"><input type="text" class="order" /></div>
+            				<div class="up" data-o="1"><input type="text" class="team"/><input type="text" class="score"/></div>
+            				<div class="z1"><span data-t="home2-1">&raquo;</span></div>
+            				<div class="s4 down" data-o="1"><input type="text" class="team" disabled/><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            				<div class="s4 z10"><span data-t="home3-1">&raquo;</span></div>
+            				<div class="final"><input type="text"></div>
+                        </div>
                     
                     <div class="s4 row3">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="2"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z2"><span data-t="visitor2-1">&raquo;</span></div>
-            					<div class="up" data-o="1"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z6"><span data-t="home3-1">&raquo;</span></div>
-        				    </div>
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="down" data-o="2"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            			<div class="z2"><span data-t="visitor2-1">&raquo;</span></div>
+            			<div class="up" data-o="1"><input type="text" class="team" disabled/><input type="text" class="score" /></div>
+            			<div class="z6"><span data-t="home3-1">&raquo;</span></div>
+        			</div>
 				    
-            				<div class="s4 row4">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="2"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor2-1">&raquo;</span></div>
-            					<div></div>
-            					<div class="s8 z8"></div>
-            					<div class="s8 down" data-o="1"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="s8 z10"><span data-t="home4-1">&raquo;</span></div>
-            					<div class="final"><input type="text"></div>
-        				    </div>
+            		<div class="s4 row4">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="up" data-o="2"><input type="text" class="team" /><input type="text" class="score" /></div>
+            			<div class="z0"><span data-t="visitor2-1">&raquo;</span></div>
+            			<div></div>
+            			<div class="s8 z8"></div>
+            			<div class="s8 down" data-o="1"><input type="text" class="team" disabled/><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+        				<div class="s8 z10"><span data-t="home4-1">&raquo;</span></div>
+    					<div class="final"><input type="text" disabled></div>
+        			</div>
         				    
-        				    <div class="s8 row5">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="3"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z0"><span data-t="home2-2">&raquo;</span></div>
-            					<div></div>
-            					<div class="z9"></div>
-            					<div class="up" data-o="1"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z6"><span data-t="home4-1">&raquo;</span></div>
-        				    </div>
+        			<div class="s8 row5">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="down" data-o="3"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+        				<div class="z0"><span data-t="home2-2">&raquo;</span></div>
+    					<div></div>
+            			<div class="z9"></div>
+        				<div class="up" data-o="1"><input type="text" class="team" disabled/><input type="text" class="score" /></div>
+        				<div class="z6"><span data-t="home4-1">&raquo;</span></div>
+    			    </div>
         				    
-        				    <div class="s8 row6">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="3"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z1"><span data-t="home2-2">&raquo;</span></div>
-            					<div class="down" data-o="2"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z7"><span data-t="visitor3-1">&raquo;</span></div>
-            					<div></div>
-            					<div class="s16 z5"></div>
-        				    </div>
+        			<div class="s8 row6">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="up" data-o="3"><input type="text" class="team" /><input type="text" class="score" /></div>
+            			<div class="z1"><span data-t="home2-2">&raquo;</span></div>
+            			<div class="down" data-o="2"><input type="text" class="team" disabled/><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+        				<div class="z7"><span data-t="visitor3-1">&raquo;</span></div>
+    					<div></div>
+        				<div class="s16 z5"></div>
+				    </div>
         				    
-        				    <div class="s8 row7">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="4"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z2"><span data-t="visitor2-2">&raquo;</span></div>
-            					<div class="up" data-o="2"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor3-1">&raquo;</span></div>
-            					<div></div>
-            					<div class="s16 z5"></div>
-        				    </div>
+        			<div class="s8 row7">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="down" data-o="4"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            			<div class="z2"><span data-t="visitor2-2">&raquo;</span></div>
+        				<div class="up" data-o="2"><input type="text" class="team" disabled/><input type="text" class="score" /></div>
+        				<div class="z0"><span data-t="visitor3-1">&raquo;</span></div>
+        				<div></div>
+        				<div class="s16 z5"></div>
+    			    </div>
         				    
-            				<div class="s8 row8">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="4"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor2-2">&raquo;</span></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div class="s16 z8"></div>
-            					<div class="s16 down" data-o="1"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="s16 z10"><span data-t="home5-1">&raquo;</span></div>
-            					<div class="final"><input type="text"></div>
-        				    </div>
-        				    <div class="s16 row9">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="5"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z0"><span data-t="home2-3">&raquo;</span></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div class="z9"></div>
-            					<div class="up" data-o="1"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z6"><span data-t="home5-1">&raquo;</span></div>
-        				    </div>
+            		<div class="s8 row8">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="up" data-o="4"><input type="text" class="team" /><input type="text" class="score" /></div>
+            			<div class="z0"><span data-t="visitor2-2">&raquo;</span></div>
+            			<div></div>
+            			<div></div>
+            			<div></div>
+            			<div class="s16 z8"></div>
+            			<div class="s16 down" data-o="1"><input type="text" class="team" disabled/><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            			<div class="s16 z10"><span data-t="home5-1">&raquo;</span></div>
+            			<div class="final"><input type="text"></div>
+        		    </div>
+        		    
+        			<div class="s16 row9">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="down" data-o="5"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            			<div class="z0"><span data-t="home2-3">&raquo;</span></div>
+            			<div></div>
+            			<div></div>
+            			<div></div>
+            			<div class="z9"></div>
+            			<div class="up" data-o="1"><input type="text" class="team" disabled/><input type="text" class="score" /></div>
+            			<div class="z6"><span data-t="home5-1">&raquo;</span></div>
+        			</div>
         				    
-        				    <div class="s16 row10">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="5"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z1"><span data-t="home2-3">&raquo;</span></div>
-            					<div class="down" data-o="3"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z0"><span data-t="home3-2">&raquo;</span></div>
-            					<div></div>
-            					<div class="z5"></div>
-            					<div></div>
-            					<div class="s32 z5"></div>
-        				    </div>
+        			<div class="s16 row10">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="up" data-o="5"><input type="text" class="team" /><input type="text" class="score" /></div>
+            			<div class="z1"><span data-t="home2-3">&raquo;</span></div>
+            			<div class="down" data-o="3"><input type="text" class="team" disabled/><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+    					<div class="z0"><span data-t="home3-2">&raquo;</span></div>
+        				<div></div>
+            			<div class="z5"></div>
+            			<div></div>
+            			<div class="s32 z5"></div>
+    			    </div>
+        				
+        			<div class="s16 row11">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="down" data-o="6"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            			<div class="z2"><span data-t="visitor2-3">&raquo;</span></div>
+            			<div class="up" data-o="3"><input type="text" class="team" disabled/><input type="text" class="score" /></div>
+            			<div class="z6"><span data-t="home3-2">&raquo;</span></div>
+            			<div></div>
+            			<div class="z5"></div>
+            			<div></div>
+            			<div class="s32 z5"></div>
+        			</div>
         				    
-        				    <div class="s16 row11">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="6"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z2"><span data-t="visitor2-3">&raquo;</span></div>
-            					<div class="up" data-o="3"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z6"><span data-t="home3-2">&raquo;</span></div>
-            					<div></div>
-            					<div class="z5"></div>
-            					<div></div>
-            					<div class="s32 z5"></div>
-        				    </div>
+        			<div class="s16 row12">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="up" data-o="6"><input type="text" class="team" /><input type="text" class="score" /></div>
+            			<div class="z0"><span data-t="visitor2-3">&raquo;</span></div>
+        				<div></div>
+    					<div class="z8"></div>
+            			<div class="down" data-o="2"><input type="text" class="team" disabled/><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            			<div class="z7"><span data-t="visitor4-1">&raquo;</span></div>
+        				<div></div>
+    					<div class="s32 z5"></div>
+        			</div>
         				    
-        				    <div class="s16 row12">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="6"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor2-3">&raquo;</span></div>
-            					<div></div>
-            					<div class="z8"></div>
-            					<div class="down" data-o="2"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z7"><span data-t="visitor4-1">&raquo;</span></div>
-            					<div></div>
-            					<div class="s32 z5"></div>
-        				    </div>
+        			<div class="s16 row13">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="down" data-o="7"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            			<div class="z0"><span data-t="home2-4">&raquo;</span></div>
+            			<div></div>
+            			<div class="z9"></div>
+        				<div class="up" data-o="2"><input type="text" class="team" disabled/><input type="text" class="score" /></div>
+    					<div class="z0"><span data-t="visitor4-1">&raquo;</span></div>
+            			<div></div>
+            			<div class="s32 z5"></div>
+        			</div>
         				    
-        				    <div class="s16 row13">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="7"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z0"><span data-t="home2-4">&raquo;</span></div>
-            					<div></div>
-            					<div class="z9"></div>
-            					<div class="up" data-o="2"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor4-1">&raquo;</span></div>
-            					<div></div>
-            					<div class="s32 z5"></div>
-        				    </div>
+        			<div class="s16 row14">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="up" data-o="7"><input type="text" class="team" /><input type="text" class="score" /></div>
+            			<div class="z1"><span data-t="home2-4">&raquo;</span></div>
+            			<div class="down" data-o="4"><input type="text" class="team" disabled/><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            			<div class="z7"><span data-t="visitor3-2">&raquo;</span></div>
+        				<div></div>
+    					<div></div>
+            			<div></div>
+            			<div class="s32 z5"></div>
+        			</div>
         				    
-        				    <div class="s16 row14">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="7"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z1"><span data-t="home2-4">&raquo;</span></div>
-            					<div class="down" data-o="4"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z7"><span data-t="visitor3-2">&raquo;</span></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div class="s32 z5"></div>
-        				    </div>
+        			<div class="s16 row15">
+            			<div class="first"><input type="text" class="order" /></div>
+            			<div class="down" data-o="8"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            			<div class="z2"><span data-t="visitor2-4">&raquo;</span></div>
+        				<div class="up" data-o="4"><input type="text" class="team" disabled/><input type="text" class="score" /></div>
+        				<div class="z0"><span data-t="visitor3-2">&raquo;</span></div>
+            			<div></div>
+            			<div></div>
+        				<div></div>
+    					<div class="s32 z5"></div>
+        			</div>
         				    
-        				    <div class="s16 row15">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="8"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z2"><span data-t="visitor2-4">&raquo;</span></div>
-            					<div class="up" data-o="4"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor3-2">&raquo;</span></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div class="s32 z5"></div>
-        				    </div>
-        				    
-        				    <div class="s16 row16">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="8"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor2-4">&raquo;</span></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div class="s32 z8"></div>
-            					<div class="s32 down" data-o="1"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="s32 z10"><span data-t="winner15">&raquo;</span></div>
-            					<div class="s32 final"><input type="text"></div>
-        				    </div>
-        				    
-        				    <div class="s32 row17">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="9"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z0"><span data-t="home2-5">&raquo;</span></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div class="z9"></div>
-            					<div class="up" data-o="1"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z6"><span data-t="winner15">&raquo;</span></div>
-        				    </div>
-        				    
-        				    <div class="s32 row18">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="9"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z1"><span data-t="home2-5">&raquo;</span></div>
-            					<div class="down" data-o="5"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z0"><span data-t="home3-3">&raquo;</span></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div class="z5"></div>
-        				    </div>
-        				    
-        				    <div class="s32 row19">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="10"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z2"><span data-t="visitor2-5">&raquo;</span></div>
-            					<div class="up" data-o="5"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z6"><span data-t="home3-3">&raquo;</span></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div class="z5"></div>
-        				    </div>
-        				    
-        				    <div class="s32 row20">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="10"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor2-5">&raquo;</span></div>
-            					<div></div>
-            					<div class="z8"></div>
-            					<div class="down" data-o="3"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z0"><span data-t="home4-2">&raquo;</span></div>
-            					<div></div>
-            					<div class="z5"></div>
-        				    </div>
-        				    
-        				    <div class="s32 row21">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="11"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z0"><span data-t="home2-6">&raquo;</span></div>
-            					<div></div>
-            					<div class="z9"></div>
-            					<div class="up" data-o="3"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z6"><span data-t="home4-2">&raquo;</span></div>
-            					<div></div>
-            					<div class="z5"></div>
-        			    	</div>
-        			    	
-        			    	<div class="s32 row22">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="11"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z1"><span data-t="home2-6">&raquo;</span></div>
-            					<div class="down" data-o="6"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z7"><span data-t="visitor3-3">&raquo;</span></div>
-            					<div></div>
-            					<div class="z5"></div>
-            					<div></div>
-            					<div class="z5"></div>
-        				    </div>
-        				    
-        				    <div class="s32 row23">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="12"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z2"><span data-t="visitor2-6">&raquo;</span></div>
-            					<div class="up" data-o="6"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor3-3">&raquo;</span></div>
-            					<div></div>
-            					<div class="z5"></div>
-            					<div></div>
-            					<div class="z5"></div>
-        				    </div>
-        				    
-        				    <div class="s32 row24">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="12"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor2-6">&raquo;</span></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div class="z8"></div>
-            					<div class="down" data-o="2"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z7"><span data-t="visitor5-1">&raquo;</span></div>
-        				    </div>
-        				    
-        				    <div class="s32 row25">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="13"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z0"><span data-t="home2-7">&raquo;</span></div>
-            					<div></div>
-            					<div></div>
-            					<div></div>
-            					<div class="z9"></div>
-            					<div class="up" data-o="2"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor5-1">&raquo;</span></div>
-        				    </div>
-        				    
-        				    <div class="s32 row26">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="13"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z1"><span data-t="home2-7">&raquo;</span></div>
-            					<div class="down" data-o="7"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z0"><span data-t="home3-4">&raquo;</span></div>
-            					<div></div>
-            					<div class="z5"></div>
-        				    </div>
-        				    
-        				    <div class="s32 row27">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="14"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z2"><span data-t="visitor2-7">&raquo;</span></div>
-            					<div class="up" data-o="7"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z6"><span data-t="home3-4">&raquo;</span></div>
-            					<div></div>
-            					<div class="z5"></div>
-        				    </div>
-        				    
-        				    <div class="s32 row28">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="14"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z6"><span data-t="visitor2-7">&raquo;</span></div>
-            					<div></div>
-            					<div class="z8"></div>
-            					<div class="down" data-o="4"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z7"><span data-t="visitor4-2">&raquo;</span></div>
-        				    </div>
-        				    
-        				    <div class="s32 row29">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="15"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z0"><span data-t="home2-8">&raquo;</span></div>
-            					<div></div>
-            					<div class="z9"></div>
-            					<div class="up" data-o="4"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor4-2">&raquo;</span></div>
-        				    </div>
-        				    
-        				    <div class="s32 row30">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="15"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z1"><span data-t="home2-8">&raquo;</span></div>
-            					<div class="down" data-o="8"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z7"><span data-t="visitor3-4">&raquo;</span></div>
-        				    </div>
-        				    
-        				    <div class="s32 row31">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="down" data-o="16"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
-            					<div class="z2"><span data-t="visitor2-8">&raquo;</span></div>
-            					<div class="up" data-o="8"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor3-4">&raquo;</span></div>
-            				</div>
-                    
-            				<div class="s32 row32">
-            					<div class="first"><input type="text" class="order" /></div>
-            					<div class="up" data-o="16"><input type="text" class="team" /><input type="text" class="score" /></div>
-            					<div class="z0"><span data-t="visitor2-8">&raquo;</span></div>
-            				</div>
-            				
-            				<div class="rounds">
-            					<div class="s32"></div>
-            					<div class="s32">16th-finals</div>
-            					<div class="s16"></div>
-            					<div class="s16">8th-finals</div>
-            					<div class="s8"></div>
-            					<div class="s8">Quarterfinals</div>
-            					<div class="s4"></div>
-            					<div class="s4">Semifinals</div>
-            					<div class="s4"></div>
-            					<div class="s4">Final</div>
-            					<div class="s4 winnerLabel"></div>
-            					<div class="s4 winnerLabel">Winner</div>
-        				    </div>
+        			<div class="s16 row16">
+            			<div class="first"><input type="text" class="order" /></div>
+    					<div class="up" data-o="8"><input type="text" class="team" /><input type="text" class="score" /></div>
+            			<div class="z0"><span data-t="visitor2-4">&raquo;</span></div>
+            			<div></div>
+            			<div></div>
+            			<div></div>
+            			<div></div>
+            			<div></div>
+            			<div class="s32 z8"></div>
+            			<div class="s32 down" data-o="1"><input type="text" class="team" /><input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
+            			<div class="s32 z10"><span data-t="winner15">&raquo;</span></div>
+            			<div class="s32 final"><input type="text"></div>
+        		    </div>
+        			
+        			<div class="rounds">
+        				<div class="s16"></div>
+        				<div class="s16">8th-finals</div>
+        				<div class="s8"></div>
+        				<div class="s8">Quarterfinals</div>
+        				<div class="s4"></div>
+        				<div class="s4">Semifinals</div>
+        				<div class="s4"></div>
+        				<div class="s4">Final</div>
+        				<div class="s4 winnerLabel"></div>
+        				<div class="s4 winnerLabel">Winner</div>
+        		    </div>
                 </div>
             </div>
         </div>
@@ -913,10 +742,10 @@
             var rounds = 3;
             var i = 0;
             $(function() {
-              var handle = $( "#teams-handle" );
-              $( "#teamslider" ).slider({
-              min: 1, // min value
-              max: 5, // max value
+              var handle = $("#teams-handle");
+              $("#teamslider").slider({
+              min: 2, // min value # of rounds
+              max: 4, // max value # of rounds
               step: 1,
               value: rounds,
                 create: function() {
@@ -963,9 +792,11 @@
             }
             
             $(document).ready(function() {
+                // score is not a part of the tournament
+                $("input.score").prop('disabled', true);
             	
             	$("input.team").each(function() {
-            		$(this).parent().attr("data-r", ($(this).parent().index() + 1) / 2);	// r - round	o - hanyadik meccs abban a roundban
+            		$(this).parent().attr("data-r", ($(this).parent().index() + 1) / 2);	
             
             	});
             	$("input.info").each(function() {
@@ -1048,7 +879,9 @@
             	$("input.team").focusout(function() {
             		$("#tournament > div > div").removeClass("focused");
             	});
-
+            	
+            	
+                // will be removed, score not important
             	$("input.score").bind("keyup change", function(e) {
             		var scoreA = $(this).val();
             		if (scoreA == "") {scoreA = 0;}
@@ -1100,23 +933,25 @@
             		});
             	});
             	
-            	$("#erase").click(function() {
-            		$("input.team, input.score").val("");
-            		$("#tournament > div > div").removeClass("winner");
-            		$("#tournament > div > div").removeClass("loser");
-            		$("#title").val("");
-            		updateNumberOfGames();
-            		updateWinners();
-            	});
+            	// erase data in bracket
+            // 	$("#erase").click(function() {
+            // 		$("input.team, input.score").val("");
+            // 		$("#tournament > div > div").removeClass("winner");
+            // 		$("#tournament > div > div").removeClass("loser");
+            // 		$("#title").val("");
+            // 		updateNumberOfGames();
+            // 		updateWinners();
+            // 	});
             	
-            	$("#erasescore").click(function() {
-            		$("input.score").val("");
-            		$("#tournament > div > div").removeClass("winner");
-            		$("#tournament > div > div").removeClass("loser");
-            		$("#title").val("");
-            		updateNumberOfGames();
-            		updateWinners();
-            	});
+            	
+            // 	$("#erasescore").click(function() {
+            // 		$("input.score").val("");
+            // 		$("#tournament > div > div").removeClass("winner");
+            // 		$("#tournament > div > div").removeClass("loser");
+            // 		$("#title").val("");
+            // 		updateNumberOfGames();
+            // 		updateWinners();
+            // 	});
               
             	$("#shuffleteams").click(function() {
             		for (i = 0; i < 200; i++) {
@@ -1222,6 +1057,7 @@
             		$("#" + mit).removeClass("flashit");
             	}, 25 * mennyit + 300);
             }
+            
         </script>
     </body>
 </html>
