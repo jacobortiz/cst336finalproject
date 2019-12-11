@@ -4,7 +4,9 @@ const session = require('express-session');
 
 // Home Page...
 router.get('/', function(req, res) {
-        
+    
+    console.log("Home being generated");
+    
     res.render('finalProject/home', {
         title: 'CST 336',
     });
