@@ -94,7 +94,7 @@ header #login-button, #logout-button {
 
 /* ---------- Styling for Login Modal --------- */
 
-#username, #password {
+#LI_username, #CA_username, #LI_password, #CA_password, #CA_fname, #CA_lname, #CA_age {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;

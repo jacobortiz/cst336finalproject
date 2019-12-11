@@ -76,13 +76,48 @@ $('#submit-login-button').on('click', function(e) {
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify({
-            "username": $("#username").val(),
-            "password": $("#password").val()
+            "username": $("#LI_username").val(),
+            "password": $("#LI_password").val()
         }),
         success: function(result, status) {
             console.log("got login status back", result);
             if (result.successful) {
                 window.location.href = '/finalProject/admin';
+            }
+            else {
+                // Show an error message or something and stay here
+                alert(result.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            err = eval("error: (" + xhr.responseText + ")");
+            console.error(err);
+        },
+        complete: function(data, status) { //optional, used for debugging purposes
+            console.log(status);
+        }
+    });
+});
+
+$('#create-account-button').on('click', function(e) {
+    e.preventDefault();
+    
+    $.ajax({
+        type: "POST",
+        url: "/finalProject/create_account",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify({
+               "fname": $("#CA_fname").val(),
+               "lname": $("#CA_lname").val(),
+                 "age": $("#CA_age").val(),
+            "username": $("#CA_username").val(),
+            "password": $("#CA_password").val()
+        }),
+        success: function(result, status) {
+            console.log("got login status back", result);
+            if (result.successful) {
+                window.location.href = '/finalProject';
             }
             else {
                 // Show an error message or something and stay here
