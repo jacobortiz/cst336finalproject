@@ -27,9 +27,12 @@ router.get('/', function(req, res) {
 // bracketing
 router.get('/bracketing', function(req, res) {
     
-    // EXAMPLE LINK - /bracketing?username=kevin1&title=GTX%2012
+    // EXAMPLE LINK - /bracketing?title=GTX%2012
+
+    title = req.query.title;
+    
     const sql = `SELECT level, position, won, display_name_1, display_name_2 
-    from bracket where title="Battle of the Bands" ORDER BY level DESC, position ASC;`;
+    from bracket where title="${title}" ORDER BY level DESC, position ASC;`;
 
     
     const connection = mysql.createConnection({
@@ -45,8 +48,8 @@ router.get('/bracketing', function(req, res) {
         if(error) throw error
         
         res.render('finalProject/bracketing', {
-           title: 'Tournament Brackets',
-           game: '?',
+           title: title,
+           game: title,
            data: JSON.stringify(results)
         }); 
         
@@ -68,7 +71,6 @@ router.post('/login', function(req, res) {
     let SQLCommand_checkUserExists = `SELECT u.hash
                                       FROM user u 
                                       WHERE u.username LIKE '${req.body.username}'`;
-    
 
     connection.query(SQLCommand_checkUserExists, (error, results, fields) => {
         if (error) throw error;
@@ -119,7 +121,6 @@ router.get('/admin', function(req, res) {
         delete req.session.username;
         res.redirect('/finalProject/');
     }
-    
 });
 
 router.post('/create_account', function(req, res) {
