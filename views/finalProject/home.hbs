@@ -11,10 +11,12 @@
     
     <body>
     
-        <header>
-            <div id="header"> 
-                <div id="title"><h2>{{title}}</h2></div>
-                <marquee id="intro" direction="left"><big><i>Final Project for CST 336, Internet Programming, made by Joseph, Kevin, Jacob, & Michael</i></big></marquee>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                {{title}}
+            </a>
+            <marquee id="intro" direction="left"><big><i>Final Project for CST 336, Internet Programming, made by Joseph, Kevin, Jacob, & Michael</i></big></marquee>
+            <form class="form-inline">
                 <div id="login-button">
                     <input type="image" 
                            src="img/login_icon.png" 
@@ -23,9 +25,8 @@
                            onclick="document.getElementById('loginForm').style.display='block'"/>
                 </div>
             </div>
-        </header>
-        
-        <br><br>
+            </form>
+        </nav>
         
         <div id="loginForm" class="modal">
             <div class="modal-content animate">
@@ -70,19 +71,20 @@
             </form>
         </div>
     
-        <div id="trophy"></div>
-        
-        <br><br><br><br><br><br>
-        
-        <div id="searchBar" style="margin:auto;max-width:800px">
-          <input type="text" placeholder="Search in Tournaments.." id="search-field">
-          <button type="submit" id="search-button" onclick="search()"><i class="fa fa-search"></i></button>
-        </div>   
-        
-        <br><br>
-        
-        
-        <div class="container-fluid" style="margin-top: 30px"></div>
+        <div id="body-container">
+            <div id="trophy-container">
+                <div id="trophy"></div>
+            </div>
+            
+            <div id="search-container">
+                <div id="searchBar" style="margin:auto;max-width:800px">
+                    <input type="text" placeholder="Search in Tournaments.." id="search-field">
+                    <button type="submit" id="search-button" onclick="search()"><i class="fa fa-search"></i></button>
+                </div>   
+            </div>
+            
+            <div class="container-fluid" style="height: 100%; width: 100%"></div>
+        </div>
         
         <script src="js/functions.js"></script>
         

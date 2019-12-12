@@ -5,6 +5,10 @@
 
 body {
   background: url(../img/background.jpg);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
 }
 
 /* ------------- Trophy Animation ------------- */
@@ -14,12 +18,8 @@ body {
   padding: 0;
   background: url(../img/trophy.png);
   background-repeat: repeat-x;   
-  position: absolute;
-  top: 20%;
-  left: 47%;
   height:81px;
   width: calc(494px/6);
-  transform: translate(-50%, -50%);
   animation: animate 1s steps(6) infinite;
 }
 
@@ -248,3 +248,23 @@ span.new-here {
   padding-top: 8px;
   padding-bottom: 8px;
 }
+
+#body-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+#trophy-container {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#search-container {
+  width: 100%;
+}
+
