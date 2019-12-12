@@ -158,22 +158,45 @@ router.post('/create_tournament', function(req, res) {
             if (error) {
                 res.json({
                     successful: false,
-                    message: 'could not insert into tournament table!'
+                    message: 'Error: Title already exists!'
                 });
+                return;
             }
 
-            console.log("Tournament Created!");
+            console.log("Tournament Inserted into database!");
 
             console.log(req.body.matches);
-            connection.query(
-                ''
-            );
+            let c = 1;
+            for (match of req.body.matches) {
+                
+                connection.query(
+                    'INSERT INTO bracket(title, level, position, display_name_1, display_name_2, created) VALUES (?, ?, ?, ?, ?, ?)',
+                    [req.body.title, req.body.levels, c, match[0], match[1], date],
+                    (error, results, fields) => {
+                        if (error) {
+                            res.json({
+                                successful: false,
+                                message: 'Error: Contact Kevin!'
+                            });
+                            return;
+                        }
+
+                        if (c == req.body.matches.length) {
+                            res.json({
+                                successful: true,
+                                message: 'success'
+                            });
+                            connection.end();
+                            return;
+                        }
+
+                    }
+                );
+
+                c += 1;
+            }
         }
     );
-
-    
-    
-    connection.end();
 
 });
 
