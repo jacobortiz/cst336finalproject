@@ -9,6 +9,10 @@ router.get("/new", function(req, res) {
     res.render('finalProject/create_account');
 });
 
+router.get("/create_tournament", function(req, res) {
+    res.render('finalProject/create_tournament')
+});
+
 // Home Page...
 router.get('/', function(req, res) {
     
@@ -169,6 +173,73 @@ router.get('/logout', function(req, res) {
         successful: true,
         message: ''
     });
+});
+
+router.post('/create_tournament', function(req, res) {
+
+    username = "kevin1";
+
+    const connection = mysql.createConnection({
+        host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user: 'u4iixpff4n2b1uam',
+        password: 'gszyw5nfp2os51lq',
+        database: 'c2cyppf6xaxjv2wy'
+    });
+
+    connection.connect();
+
+    let successful = false;
+    let message = '';
+
+    date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+    connection.query(
+        'INSERT INTO tournament(username, title, levels, created , zip) VALUES (?, ?, ?, ?, ?);', 
+        [username, req.body.title, req.body.levels, date, req.body.zip], 
+        (error, results, fields) => {
+            if (error) {
+                res.json({
+                    successful: false,
+                    message: 'Error: Title already exists!'
+                });
+                return;
+            }
+
+            console.log("Tournament Inserted into database!");
+
+            console.log(req.body.matches);
+            let c = 1;
+            for (match of req.body.matches) {
+                
+                connection.query(
+                    'INSERT INTO bracket(title, level, position, display_name_1, display_name_2, created) VALUES (?, ?, ?, ?, ?, ?)',
+                    [req.body.title, req.body.levels, c, match[0], match[1], date],
+                    (error, results, fields) => {
+                        if (error) {
+                            res.json({
+                                successful: false,
+                                message: 'Error: Contact Kevin!'
+                            });
+                            return;
+                        }
+
+                        if (c == req.body.matches.length) {
+                            res.json({
+                                successful: true,
+                                message: 'success'
+                            });
+                            connection.end();
+                            return;
+                        }
+
+                    }
+                );
+
+                c += 1;
+            }
+        }
+    );
+
 });
 
 module.exports = router;
