@@ -58,21 +58,23 @@ $("#search-button").on("click", function (){
             
             //set quotes table head
             $(`<div class="table-row header" style="background: #2196F3">
-                  <div class="text" style="width: 25%">Tournament Name</div>
-                  <div class="text" style="width: 25%">Tournament Manager</div>
-                  <div class="text" style="width: 25%">Tournament Location</div>
-                  <div class="text" style="width: 25%">Tournament Created</div>
+                  <div class="text" style="width: 20%">Tournament Name</div>
+                  <div class="text" style="width: 20%">Tournament Manager</div>
+                  <div class="text" style="width: 20%">Tournament Location</div>
+                  <div class="text" style="width: 20%">Tournament Created</div>
+                  <div class="text" style="width: 20%">Views</div>
               </div>`).appendTo(".container-fluid"); 
               
             //populate quotes table
             for (let i = 0; i < result.tournament.length; i++) {
                 $(`<div class="table-row" style="background: white">
-                        <div id="tournamentName" class="text" style="width: 25%; color: black">
+                        <div id="tournamentName" class="text" style="width: 20%; color: black">
                             ${result.tournament[i].title}
                         </div>
-                        <div class="text" style="width: 25%; color: black">${result.tournament[i].fullName}</div>
-                        <div class="text" style="width: 25%; color: black">${result.tournament[i].zip}</div>
-                        <div class="text" style="width: 25%; color: black">${result.tournament[i].created.split("T", 1)}</div>
+                        <div class="text" style="width: 20%; color: black">${result.tournament[i].fullName}</div>
+                        <div class="text" style="width: 20%; color: black">${result.tournament[i].zip}</div>
+                        <div class="text" style="width: 20%; color: black">${result.tournament[i].created.split("T", 1)}</div>
+                        <div class="text" style="width: 20%; color: black"> <button onclick="window.location.href = './bracketing?title=${result.tournament[i].title.replace(" ", "%20")}'">View</button> </div>
                   </div>`).appendTo(".container-fluid"); 
             }
         },
