@@ -138,7 +138,6 @@ router.get('/admin', function(req, res) {
             connection.end();
         });
         
-        connection.end();
     } else {
         delete req.session.username;
         res.redirect('/finalProject/');
