@@ -72,7 +72,7 @@ $('#submit-login-button').on('click', function(e) {
     
     $.ajax({
         type: "POST",
-        url: "/finalProject",
+        url: "/finalProject/login",
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify({
@@ -90,8 +90,8 @@ $('#submit-login-button').on('click', function(e) {
             }
         },
         error: function(xhr, status, error) {
-            err = eval("error: (" + xhr.responseText + ")");
-            console.error(err);
+            error = eval("error: (" + xhr.responseText + ")");
+            console.error(error);
         },
         complete: function(data, status) { //optional, used for debugging purposes
             console.log(status);
@@ -101,6 +101,7 @@ $('#submit-login-button').on('click', function(e) {
 
 $('#create-account-button').on('click', function(e) {
     e.preventDefault();
+
     
     $.ajax({
         type: "POST",
@@ -125,8 +126,8 @@ $('#create-account-button').on('click', function(e) {
             }
         },
         error: function(xhr, status, error) {
-            err = eval("error: (" + xhr.responseText + ")");
-            console.error(err);
+            error = eval("error: (" + xhr.responseText + ")");
+            console.error(error);
         },
         complete: function(data, status) { //optional, used for debugging purposes
             console.log(status);

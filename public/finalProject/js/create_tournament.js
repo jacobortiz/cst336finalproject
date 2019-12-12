@@ -48,6 +48,11 @@ $(document).ready(function() {
         return true;
     }
 
+    //  3  2  1  winner
+    //  -
+    //  -  -  _  _
+    //  -  -
+    //  -
     function get_data() {
         let title = $("#t-title").val();
         let zip = $("#t-zip").val();        
@@ -79,6 +84,8 @@ $(document).ready(function() {
             matches: matches
         }
 
+        console.log(data);
+
         return data;
     }
 
@@ -94,13 +101,13 @@ $(document).ready(function() {
             data: JSON.stringify(data),
             success: function(result, status) {
                 console.log("Success ", result)
+                if (!result.successful) {
+                    alert_modal(result.message);
+                }
             },
             error: function(xhr, status, error) {
                 err = eval("error: (" + xhr.responseText + ")");
                 console.error(err);
-            },
-            complete: function(data, status) {
-                console.log(status);
             }
         });
     }
