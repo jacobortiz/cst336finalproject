@@ -68,7 +68,7 @@ $("#search-button").on("click", function (){
             //populate quotes table
             for (let i = 0; i < result.tournament.length; i++) {
                 $(`<div class="table-row" style="background: white">
-                        <div id="tournamentName" class="text" style="width: 25%; color: black">
+                        <div id="tournamentName" class="text" style="width: 20%; color: black">
                             ${result.tournament[i].title}
                         </div>
                         <div class="text" style="width: 20%; color: black">${result.tournament[i].fullName}</div>
