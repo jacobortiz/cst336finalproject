@@ -136,8 +136,10 @@ router.get('/admin', function(req, res) {
                 empty: results.length == 0,
                 tournaments: results
             });
-
         });
+        
+        connection.end();
+        
     } else {
         delete req.session.username;
         res.redirect('/finalProject/');
@@ -338,7 +340,7 @@ router.post('/create_tournament', function(req, res) {
             }
         }
     );
-
+    connection.end();
 });
 
 module.exports = router;
