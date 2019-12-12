@@ -68,13 +68,13 @@ $("#search-button").on("click", function (){
             //populate quotes table
             for (let i = 0; i < result.tournament.length; i++) {
                 $(`<div class="table-row" style="background: white">
-                        <div id="tournamentName" class="text" style="width: 25%; color: black">
+                        <div id="tournamentName" class="text" style="width: 20%; color: black">
                             ${result.tournament[i].title}
                         </div>
                         <div class="text" style="width: 20%; color: black">${result.tournament[i].fullName}</div>
-                        <div class="text" style="width: 20%; color: black">${result.tournament[i].zip}</div>
+                        <div class="text" style="width: 20%; color: black">${getCityFrom(result.tournament[i].zip)}</div>
                         <div class="text" style="width: 20%; color: black">${result.tournament[i].created.split("T", 1)}</div>
-                        <div class="text" style="width: 20%; color: black"> <button onclick="window.location.href = './bracketing?title=${result.tournament[i].title.replace(" ", "%20")}'">View</button> </div>
+                        <div class="text" style="width: 20%"> <button class="btn-primary" onclick="window.location.href = './bracketing?title=${result.tournament[i].title.replace(" ", "%20")}'">View</button></div>
                   </div>`).appendTo(".container-fluid"); 
             }
         },
@@ -86,6 +86,20 @@ $("#search-button").on("click", function (){
     
     return;
 });
+
+function getCityFrom(zip) {
+    $("#zip").on("change", function() {
+        $.ajax({
+          method: "GET",
+             url: "https://cst336.herokuapp.com/projects/api/cityInfoAPI.php",
+        dataType: "json",
+            data: { "zip": zip },
+         success: function(result,status) {
+                return result.city;
+            } 
+        });
+    });
+}
            
 $('#submit-login-button').on('click', function(e) {
     e.preventDefault();
@@ -182,6 +196,6 @@ $('#logout-button').on('click', function(e) {
             console.log(status);
         }
     });
-})
+});
 
 
