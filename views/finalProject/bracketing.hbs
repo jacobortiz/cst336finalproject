@@ -12,48 +12,17 @@
           body {
             line-height:1
           }
-          
-          article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display:block }
-          nav ul{ list-style:none }
-          ins{ background-color:#ff9;color:#000;text-decoration:none }
-          mark{ background-color:#ff9;color:#000;font-style:italic;font-weight:bold }
-          del{ text-decoration:line-through }
-          abbr[title], dfn[title]{ border-bottom:1px dotted;cursor:help }
-          table{border-collapse:collapse;border-spacing:0}
-          hr{ display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0 }
-          input, select{ vertical-align:middle }
-          strong{ font-weight: bold; }
-          h1{ font-size: 2em; }
-          a, a:link, a:visited {
-              color: #0099bd;
-          }
-          a:hover {
-          	color: #03708a;
-          }
+
           body {
               padding: 210px 0 30px 0;
               font-family: arial;
               user-select: none;
           }
+          
           body.hideMenu {
               padding: 30px 0 30px 0;	
           }
-          .navigation {display: none;}
-          h1 {
-              margin: 10px 0 10px;
-              font-size: 20px;
-          }
-          h2{margin: 20px 0 10px;font-size: 17px;}
-          h3{margin: 20px 0 5px;font-size: 15px;}
-          p, ul, ol {
-              margin: 0 0 10px;
-              font-size: 13px;
-              line-height: 16px;
-          }
-          ol {
-              padding: 0;
-              margin: 0 0 10px 30px;
-          }
+          
           input {
               outline: none;
               font-weight: bold;
@@ -61,20 +30,7 @@
               user-select: text;
               border-radius: 0;
           }
-          input#embedCode {
-              font-weight: normal;
-              font-size: 12px;
-              line-height: 17px;
-              padding: 0px 5px;
-              width: 450px;
-              box-shadow: -12px 0px 8px -8px #000 inset;
-          }
           
-          input.error {
-              background: #f35959 !important;
-              text-shadow: 0px 0px 3px #FFF;
-              color: #000;
-          }
           .showwinner .winner .score {
               background: #d2a170 !important;
           }
@@ -98,6 +54,7 @@
               right: 0;
               height: 160px;
           }
+          
           #teams-handle {
           	width: 3em;
           	height: 1.6em;
@@ -111,6 +68,7 @@
           	border: none;
           	cursor: e-resize;
           }
+          
           #title {
               text-align: center;
               display: block;
@@ -123,24 +81,29 @@
               color: #616d79;
           	display: none;
           }
+          
           .name {
           	width: 100px;
           	display: inline-block;
           	color: #545c65;
           }
+          
           .input {
           	width: 200px;
           	display: inline-block;	
           }
+          
           #wrapTournament {
           	margin: 0px auto;
           	text-align: center;
           	font-weight: bold;
           }
+          
           #scrollTournament {
           	overflow-x: auto;
           	width: 100%;
           }
+          
           #tournament {
               display: inline-block;
               text-align: left;
@@ -148,10 +111,12 @@
           	padding: 10px;
           	opacity: 0.2;
           }
+          
           #tournament > div {
           	display: block;
           	clear: both;
           }
+          
           #tournament > div > div > span {
               color: #000;
               display: none;
@@ -161,28 +126,33 @@
               cursor: pointer;
               text-shadow: 2px 2px 0 #FFF, 2px -2px 0 #FFF, -2px 2px 0 #FFF, -2px -2px 0 #FFF, 2px 0px 0 #FFF, 0px 2px 0 #FFF, -2px 0px 0 #FFF, 0px -2px 0 #FFF;
           }
+          
           #tournament > div > div:hover > span, #tournament > div > div.focused > span {
           	display: block;
           }
+          
           .narrow #tournament > div > div > span {
           	height: 25px;
           	line-height: 25px;
           	font-size: 25px;
           }
+          
           #tournament > div > div {
               width: 200px;
-              /*outline: 1px solid #0000001f;*/
               float: left;
           	position: relative;
               height: 35px;
               padding: 5px 0;
           }
+          
           #tournament > div > div.down {
           	padding: 10px 0 0 0;
           }
+          
           #tournament > div > div.up {
           	padding: 0 0 10px 0;
           }
+          
           #tournament > div > div input {
               width: 73%;
               display: inline-block;
@@ -195,12 +165,15 @@
               padding: 0 0 0 3%;
               float: left;
           }
+          
           #tournament > div > div.up input {
               box-shadow: 0px 1px 0px inset #9fadbb;
           }
+          
           #tournament > div > div.down input {
               box-shadow: 0px -1px 0px inset #9fadbb;
           }
+          
           #tournament > div > div input:nth-child(2) {
               width: 24%;
               float: right;
@@ -208,6 +181,7 @@
               text-align: center;
               padding: 0;
           }
+          
           #tournament > div > div:nth-child(2n+1) {
           	width: 27px !important;
           }
@@ -224,15 +198,18 @@
               outline: none;
               box-shadow: 0px 0px 0px 2px #9fadbb;
           }
+          
           #tournament > div > div.first input {
               width: 100%;
               text-align: center;
               background: #616d79;
               color: #FFF;
           }
+          
           #tournament > div > div.first {
               padding: 10px 0 0 0;
           }
+          
           #tournament > div:nth-child(2n) div.first {
               padding: 0 0 10px 0;
           }
@@ -244,9 +221,7 @@
               right: 0px;
           	display: none;
           }
-          .showvenue .venue {
-          	display: block;
-          }
+          
           #tournament > div > div input.info {
               font-weight: normal;
               box-shadow: none;
@@ -265,6 +240,7 @@
               z-index: 99;
           	display: none;
           }
+          
           .final input {
           	text-align: center !important;
           }
@@ -295,27 +271,6 @@
           	top: -30px;
           	opacity: 0;
           }
-          .checkbox {
-          	opacity: 0.8;
-          }
-          .checkbox.active {
-          	opacity: 1;
-          }
-          .checkbox, .button {
-              display: inline-block;
-              color: #FFF;
-              padding: 5px 10px 5px 30px;
-              font-size: 13px;
-              cursor: pointer;
-              margin: 3px 5px;
-              border-radius: 10px;
-          }
-          
-          .hiddenfinalwinner .final, .hiddenfinalwinner .winnerLabel,
-          .show2 .hiddenfinalwinner .row1 .z10, .show4 .hiddenfinalwinner .row2 .z10, .show8 .hiddenfinalwinner .row4 .z10, .show16 .hiddenfinalwinner .row8 .z10, .show32 .hiddenfinalwinner .row16 .z10,
-          .show2 .hiddenfinalwinner .row2 .z1, .show4 .hiddenfinalwinner .row3 .z6, .show8 .hiddenfinalwinner .row5 .z6, .show16 .hiddenfinalwinner .row9 .z6, .show32 .hiddenfinalwinner .row17 .z6 {
-          	display: none !important;
-          }
           
           .first {
           	display: none;
@@ -326,34 +281,8 @@
           	top: -10px;
           }
           
-          .narrow #tournament > div > div.down {
-          	padding: 5px 0 0 0;
-          }
-          .narrow #tournament > div > div.up {
-          	padding: 0 0 5px 0;
-          }
-          .narrow #tournament > div > div input {
-              border: none;
-              height: 25px;
-          }
-          .narrow #tournament > div > div.first {
-          	    padding: 5px 0 0 0;
-          }
-          .narrow #tournament > div:nth-child(2n) div.first {
-              padding: 0 0 5px 0;
-          }
-          .narrow .final {
-              top: 13px;
-          }
-          
-          #tournament > div.rounds > div {
-              text-align: center;
-              color: #616d79;
-              height: 20px;
-              padding: 0;
-          }
           #tournament > div.rounds {
-          	display: none;
+              display:none;
           }
           
           @media screen and (max-width: 1500px) {
@@ -369,31 +298,9 @@
           	.show16 #tournament > div > div {
           		width: 157px;
           	}	
-          	#logo img {
-          		width: 63px;
-          	}
-          	a#more {
-          		padding: 20px;
-          	}
-          	a#logo {
-          		position: absolute;
-          		left: 10px;
-          		top: 20px;
-          		bottom: 10px;
-          	}
-          	.checkbox, .button {
-          		padding: 5px 5px 5px 28px;
-          		font-size: 12px;
-          		margin: 3px 2px;
-          	}
-          	.button {
-          		padding: 5px 5px 5px;
-          	}
+
           	.row {
           		margin: 14px 50px 15px 80px;
-          	}
-          	a#more {
-          		display: none;
           	}
           }
           
@@ -410,9 +317,6 @@
           	}		
           	#tournament > div > div:nth-child(2n+1) {
           		width: 16px !important;
-          	}
-          	input#embedCode {
-          		width: 200px;
           	}
           }
           
@@ -441,18 +345,13 @@
           	.row {
           		margin: 0px 50px 20px 10px;
           	}
-          	a#logo {
-          		display: none;
-          	}
           }
           
           @media screen and (max-width: 450px) {
           	.name {
           		display: none;
           	}
-          	a#menu {
-          		padding: 5px 10px;
-          	}
+
           	.row {
           		margin: 0px 40px 8px 10px;
           	}
