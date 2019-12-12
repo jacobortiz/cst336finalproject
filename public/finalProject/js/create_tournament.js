@@ -282,3 +282,8 @@ function edit(title) {
     $('#te-title').val(title)
     $('#editTournamentModal').modal('show');
 }
+
+function del(title) {
+    $('#td-question').text(title)
+    $('#deleteTournamentModal').modal('show');
+}

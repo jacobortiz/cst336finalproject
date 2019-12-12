@@ -258,6 +258,10 @@ router.post('/find_tournament', function(req, res){
     connection.end();
 });
 
+router.post('/delete_tournament', function (req, res) {
+
+});
+
 router.post('/edit_tournament', function (req, res) {
     
     username = req.session.username;
@@ -394,6 +398,7 @@ router.post('/create_tournament', function(req, res) {
                     successful: false,
                     message: 'Error: Title already exists!'
                 });
+                connection.end();
                 return;
             }
 
@@ -412,6 +417,7 @@ router.post('/create_tournament', function(req, res) {
                                 successful: false,
                                 message: 'Error: Contact Kevin!'
                             });
+                            connection.end();
                             return;
                         }
 
@@ -433,7 +439,6 @@ router.post('/create_tournament', function(req, res) {
             }
         }
     );
-    connection.end();
 });
 
 module.exports = router;
