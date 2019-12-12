@@ -81,42 +81,7 @@
           .showwinner .loser .team, .showwinner .loser .score .NaN {
           	opacity: 0.65;
           }
-          
-          a#more, a#menu {
-              position: absolute;
-              color: black;
-              text-decoration: none;
-              padding: 30px;
-              right: 0;
-              bottom: 0;
-              cursor: pointer;
-              opacity: 0.6;
-          	z-index: 9;
-          }
-          
-          a#more:hover, a#menu:hover {
-          	opacity: 1;
-          }
-          a#smallLogo {
-              position: absolute;
-              top: 10px;
-              left: 10px;
-              z-index: 3;
-              color: #616d79;
-              font-size: 14px;
-              text-decoration: none;
-          }
-          a#smallLogo:hover {
-          	color: #000;
-          }
-          a#menu {
-              top: 0px;
-              bottom: auto;
-              font-size: 40px;
-              font-weight: normal;
-              z-index: 5;
-              padding: 10px 20px;
-          }
+
           #wrapSettings {
           	z-index: 4;
           	overflow: hidden;
@@ -338,7 +303,6 @@
           }
           .checkbox, .button {
               display: inline-block;
-              background: url(sprite.png) no-repeat 9px -37px #616d79;
               color: #FFF;
               padding: 5px 10px 5px 30px;
               font-size: 13px;
@@ -347,50 +311,21 @@
               border-radius: 10px;
           }
           
-          .flashit {
-          	background-color: #a8a9ab;
-          }
           .hiddenfinalwinner .final, .hiddenfinalwinner .winnerLabel,
           .show2 .hiddenfinalwinner .row1 .z10, .show4 .hiddenfinalwinner .row2 .z10, .show8 .hiddenfinalwinner .row4 .z10, .show16 .hiddenfinalwinner .row8 .z10, .show32 .hiddenfinalwinner .row16 .z10,
           .show2 .hiddenfinalwinner .row2 .z1, .show4 .hiddenfinalwinner .row3 .z6, .show8 .hiddenfinalwinner .row5 .z6, .show16 .hiddenfinalwinner .row9 .z6, .show32 .hiddenfinalwinner .row17 .z6 {
           	display: none !important;
           }
-          .button {
-          	background-image: none;
-          	padding: 5px 10px 5px 10px;
-          }
-          .checkbox.active, .button:active {
-          	background-position: 9px 3px;
-          }
-          .checkbox:hover, .ui-slider-handle:hover, .button:hover {
-          	background-color: #304963 !important;
-          }
-          .hidescore #autoadvance {
-          	opacity: 0.3;
-          }
+          
           .first {
           	display: none;
           }
-          .ordered .first {
-          	display: block;
-          }
+
           .above {
           	position: absolute;
           	top: -10px;
           }
           
-          .narrow #tournament > div > div input.info {
-              height: 13px;
-              font-size: 0.8em;
-          }
-          .narrow .venue {
-          top: -5px;
-          }
-          .narrow #tournament > div > div {
-          	position: relative;
-              height: 20px;
-              padding: 5px 0;
-          }
           .narrow #tournament > div > div.down {
           	padding: 5px 0 0 0;
           }

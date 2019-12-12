@@ -50,6 +50,8 @@ router.get('/bracketing', function(req, res) {
         }); 
         
     });
+    
+    connection.end();
 });
 
 router.post('/login', function(req, res) {
