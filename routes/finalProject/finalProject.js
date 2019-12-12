@@ -15,13 +15,9 @@ router.get("/create_tournament", function(req, res) {
 
 // Home Page...
 router.get('/', function(req, res) {
-    
-    console.log("Home being generated");
-    
     res.render('finalProject/home', {
         title: 'CST 336',
     });
-    
 });
 
 // bracketing
@@ -74,6 +70,7 @@ router.post('/login', function(req, res) {
 
     connection.query(SQLCommand_checkUserExists, (error, results, fields) => {
         if (error) throw error;
+        
         if (results.length == 0) {
              res.json({
                 successful: false,
@@ -88,7 +85,6 @@ router.post('/login', function(req, res) {
         bcrypt.compare(typed_pswd, actual_pswd, function(error, result) {
                 if (error) throw error;
                 
-                console.log("RES", result);
                 if(result) {
                     req.session.username = req.body.username;
                     res.json({
@@ -102,10 +98,10 @@ router.post('/login', function(req, res) {
                         successful: false,
                         message: "incorrect password"
                     });
-                
                 } 
         });
     });     
+    
     connection.end();
 });
 
@@ -177,7 +173,6 @@ router.post('/create_account', function(req, res) {
     }); 
     
 });
-    
 
 router.get('/logout', function(req, res) {
     if (req.session && req.session.username && req.session.username.length) {
@@ -188,6 +183,59 @@ router.get('/logout', function(req, res) {
         successful: true,
         message: ''
     });
+});
+
+router.post('/find_tournament', function(req, res){
+     const connection = mysql.createConnection({
+        host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user: 'u4iixpff4n2b1uam',
+        password: 'gszyw5nfp2os51lq',
+        database: 'c2cyppf6xaxjv2wy'
+    });
+    
+    connection.connect();
+    
+    let keyword = req.body.keyword;
+    let searchBy = req.body.searchBy;
+    
+    var SQLCommand;
+    
+    switch(searchBy) {
+        case "title":
+            SQLCommand = `SELECT t.*, CONCAT(u.firstName, ' ', u.lastName) AS fullName 
+                          FROM user u RIGHT OUTER JOIN
+                          tournament t ON t.username = u.username
+                          WHERE t.title LIKE '%${keyword}%'`;
+            break;
+            
+        case "username":
+            SQLCommand = `SELECT t.*, CONCAT(u.firstName, ' ', u.lastName) AS fullName 
+                          FROM tournament t INNER JOIN
+                          user u ON t.username = u.username
+                          WHERE t.username LIKE '%${keyword}%'`;
+            break;
+            
+        case "zip":
+            SQLCommand = `SELECT t.*, CONCAT(u.firstName, ' ', u.lastName) AS fullName 
+                          FROM tournament t INNER JOIN
+                          user u ON t.username = u.username
+                          WHERE t.zip LIKE '%${keyword}%'`;
+            break;
+        default:
+            break;
+    }
+   
+    connection.query(SQLCommand, (error, results, fields) => {
+        if (error) throw error;
+        
+        console.log("Results from tournament search:\n", results);
+            res.json({
+                tournament: results
+            });
+    });   
+    
+    
+    connection.end();
 });
 
 router.post('/create_tournament', function(req, res) {
