@@ -25,7 +25,7 @@ router.get('/bracketing', function(req, res) {
     
     // EXAMPLE LINK - /bracketing?title=GTX%2012
 
-    title = req.query.title;
+    var title = req.query.title;
     
     const sql = `SELECT level, position, won, display_name_1, display_name_2 
     from bracket where title="${title}" ORDER BY level DESC, position ASC;`;
@@ -52,7 +52,6 @@ router.get('/bracketing', function(req, res) {
     });
 });
 
-    
 router.post('/login', function(req, res) {
     
     const connection = mysql.createConnection({
