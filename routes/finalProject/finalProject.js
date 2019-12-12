@@ -27,9 +27,49 @@ router.get('/', function(req, res) {
 // bracketing
 router.get('/bracketing', function(req, res) {
     
+    // EXAMPLE LINK - /bracketing?username=kevin1&title=GTX%2012
+    
+    // MYSQL CALL
+    
+    // -
+    // -  -  _
+    // -  -
+    // -
+    
+    var fake_data = [
+        {
+        "level": 3,
+        "position": 1,
+        "display_name_1": "kevin",
+        "display_name_2": "jacob",
+        "won": "NULL"
+        },
+        {
+        "level": 3,
+        "position": 2,
+        "display_name_1": "cat",
+        "display_name_2": "dog",
+        "won": "NULL"
+        },
+        {
+        "level": 3,
+        "position": 3,
+        "display_name_1": "eagle",
+        "display_name_2": "hawk",
+        "won": "NULL"
+        },
+        {
+        "level": 3,
+        "position": 4,
+        "display_name_1": "mario",
+        "display_name_2": "sonic",
+        "won": "NULL"
+        }];
+        
     res.render('finalProject/bracketing', {
        title: 'Tournament Brackets',
        game: '?',
+       data: JSON.stringify(fake_data)
     }); 
 });
 
