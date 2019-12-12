@@ -122,8 +122,6 @@ router.get('/admin', function(req, res) {
         connection.query(query, (error, results, fields) => {
             if (error) throw error;
 
-            console.log(results);
-
             for (result of results) {
                 result["levels"] = Math.pow(2, result["levels"])
             }
@@ -259,6 +257,70 @@ router.post('/find_tournament', function(req, res){
 });
 
 router.post('/delete_tournament', function (req, res) {
+
+    username = req.session.username;
+
+    console.log(username);
+
+    if (username == undefined) {
+        console.log("NOT SIGNED IN!");
+        res.json({
+            successful: false,
+            message: 'Invalid Credentials!'
+        });
+        return;
+    }
+
+    const connection = mysql.createConnection({
+        host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user: 'u4iixpff4n2b1uam',
+        password: 'gszyw5nfp2os51lq',
+        database: 'c2cyppf6xaxjv2wy'
+    });
+
+    connection.connect();
+
+    let title = req.body.title;
+
+    console.log("Deleting " + title + "!")
+
+    connection.query(
+        "DELETE FROM bracket WHERE title=?;", 
+        [req.body.title], 
+        (error, results, fields) => {
+            if (error) {
+                res.json({
+                    successful: false,
+                    message: 'Error: Title already exists!'
+                });
+                connection.end();
+                return;
+            }
+
+            connection.query(
+                "DELETE FROM tournament WHERE title=?;", 
+                [req.body.title], 
+                (error, results, fields) => {
+                    if (error) {
+                        res.json({
+                            successful: false,
+                            message: 'Error: Title already exists!'
+                        });
+                        connection.end();
+                        return;
+                    }
+                    res.json({
+                        successful: true,
+                        message: 'success'
+                    });
+                    connection.end();
+                    return;
+                }
+            );
+
+
+        }
+    );
 
 });
 

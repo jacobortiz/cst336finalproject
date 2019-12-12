@@ -231,6 +231,28 @@ $(document).ready(function() {
         });
     }
 
+    function delete_tournament() {
+
+        let title = $("#td-question").text();
+
+        $.ajax({
+            type: "POST",
+            url: "/finalProject/delete_tournament",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({
+                title: title
+            }),
+            success: function(result, status) {
+                location.reload(true); 
+            },
+            error: function(xhr, status, error) {
+                err = eval("error: (" + xhr.responseText + ")");
+                console.error(err);
+            }
+        });
+    }
+
     function alert_modal(text, type) {
         hide_alerts();
         if (type == "warning") {
@@ -241,7 +263,7 @@ $(document).ready(function() {
             $("#t-s-alert").show();
             setTimeout(function () { 
                 location.reload(true); 
-            }, 2000);
+            }, 500);
         }
     }
 
@@ -255,7 +277,7 @@ $(document).ready(function() {
             $("#te-s-alert").show();
             setTimeout(function () { 
                 location.reload(true); 
-            }, 2000);
+            }, 500);
         }
     }
 
@@ -271,6 +293,7 @@ $(document).ready(function() {
 
     $("#t-submit").on("click", submit_tournament);
     $("#te-submit").on("click", submit_tournament_edit);
+    $("#td-cd").on("click", delete_tournament);
 
     add_match_boxes();
     e_add_match_boxes();
