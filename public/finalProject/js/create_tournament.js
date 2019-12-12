@@ -102,7 +102,9 @@ $(document).ready(function() {
             success: function(result, status) {
                 console.log("Success ", result)
                 if (!result.successful) {
-                    alert_modal(result.message);
+                    alert_modal(result.message, "warning");
+                } else {
+                    alert_modal("Success", "success");
                 }
             },
             error: function(xhr, status, error) {
@@ -112,9 +114,20 @@ $(document).ready(function() {
         });
     }
 
-    function alert_modal(text) {
-        $('#t-alert').text(text);
-        $("#t-alert").show();
+    function alert_modal(text, type) {
+        hide_alerts();
+        if (type == "warning") {
+            $('#t-s-alert').text(text);
+            $("#t-s-alert").show();
+        } else {
+            $('#t-w-alert').text(text);
+            $("#t-w-alert").show();
+        }
+    }
+
+    function hide_alerts() {
+        $("#t-w-alert").hide();
+        $("#t-s-alert").hide();
     }
 
     $("#t-submit").on("click", submit_tournament);

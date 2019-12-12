@@ -5,6 +5,7 @@
 	    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    	<data style="display:none" id="data-in">{{data}}</data>
     </head> 
     <body>
         <style>
@@ -122,7 +123,7 @@
               font-weight: bold;
               width: 100%;
               padding: 20px 0 5px;
-              background: #00000061;
+              background: #00000099;
               margin: 0px auto 20px;
               border-radius: 0px;
               color: #616d79;
@@ -220,7 +221,7 @@
           #tournament > div > div input {
               width: 73%;
               display: inline-block;
-              background: #0000002e;
+              background: #00000026;
               border: none;
               height: 35px;
               text-align: left;
@@ -238,7 +239,7 @@
           #tournament > div > div input:nth-child(2) {
               width: 24%;
               float: right;
-              background: #0000004a;
+              background: #00000029;
               text-align: center;
               padding: 0;
           }
@@ -542,7 +543,7 @@
             <a id="menu">
                 &equiv;
             </a>
-            <input type="text" id="title" value="Tournament!"/> <!-- Tournament title -->
+            <input type="text" id="title" value="{{game}}"/> <!-- Tournament title -->
             <div id="scrollTournament">
                 <div id="tournament">
                     <!--  
@@ -554,7 +555,7 @@
                     -->
                     <div class="row1">
                         <div class="first"><input type="text" class="order"/></div>
-                        <div class="down" data-o="1"><input type="text" class="team" value="{{data.username}}"/>  <!-- player 1 name in value -->
+                        <div class="down" data-o="1"><input id="p1" type="text" class="team" value=""/>  <!-- player 1 name in value -->
                         <input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
                         <div class="z10"><span data-t="home2-1">&raquo;</span></div>
 					    <div class="final"><input type="text"></div>
@@ -562,7 +563,7 @@
                     
                     <div class="row2">
                         <div class="first"><input type="text" class="order" /></div>
-            				<div class="up" data-o="1"><input type="text" class="team" value="{{data.username}}"/> <!-- player 2 name -->
+            				<div class="up" data-o="1"><input id="p2" type="text" class="team" value=""/> <!-- player 2 name -->
             				<input type="text" class="score"/></div>
             				<div class="z1"><span data-t="home2-1">&raquo;</span></div>
             				<div class="s4 down" data-o="1"><input type="text" class="team" disabled value=""/> <!-- round 1 match 1 winner -->
@@ -573,7 +574,7 @@
                     
                     <div class="s4 row3">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="down" data-o="2"><input type="text" class="team" value="{{username}}"/> <!-- player 3 name -->
+            			<div class="down" data-o="2"><input id="p3" type="text" class="team" value=""/> <!-- player 3 name -->
             			<input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
             			<div class="z2"><span data-t="visitor2-1">&raquo;</span></div>
             			<div class="up" data-o="1"><input type="text" class="team" disabled value=""/> <!-- round 1 match 2 winner -->
@@ -583,7 +584,7 @@
 				    
             		<div class="s4 row4">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="up" data-o="2"><input type="text" class="team" value="{{username}}"/> <!-- player 4 name -->
+            			<div class="up" data-o="2"><input id="p4" type="text" class="team" value=""/> <!-- player 4 name -->
             			<input type="text" class="score" /></div>
             			<div class="z0"><span data-t="visitor2-1">&raquo;</span></div>
             			<div></div>
@@ -596,7 +597,7 @@
         				    
         			<div class="s8 row5">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="down" data-o="3"><input type="text" class="team" value="{{username}}"/> <!-- player 5-->
+            			<div class="down" data-o="3"><input id="p5" type="text" class="team" value=""/> <!-- player 5-->
             			<input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
         				<div class="z0"><span data-t="home2-2">&raquo;</span></div>
     					<div></div>
@@ -608,7 +609,7 @@
         				    
         			<div class="s8 row6">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="up" data-o="3"><input type="text" class="team" value="{{username}}"/> <!-- player 6 -->
+            			<div class="up" data-o="3"><input id="p6" type="text" class="team" value=""/> <!-- player 6 -->
             			<input type="text" class="score" /></div>
             			<div class="z1"><span data-t="home2-2">&raquo;</span></div>
             			<div class="down" data-o="2"><input type="text" class="team" disabled value=""/> <!-- round 1 match 3 winner -->
@@ -620,7 +621,7 @@
         				    
         			<div class="s8 row7">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="down" data-o="4"><input type="text" class="team" value="{{username}}"/> <!-- player 7 -->
+            			<div class="down" data-o="4"><input id="p7" type="text" class="team" value=""/> <!-- player 7 -->
             			<input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
             			<div class="z2"><span data-t="visitor2-2">&raquo;</span></div>
         				<div class="up" data-o="2"><input type="text" class="team" disabled value=""/> <!-- round 1 match 4 winner -->
@@ -632,7 +633,7 @@
         			
             		<div class="s8 row8">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="up" data-o="4"><input type="text" class="team" value=""/> <!-- player 8 -->
+            			<div class="up" data-o="4"><input id="p8" type="text" class="team" value=""/> <!-- player 8 -->
             			<input type="text" class="score" /></div>
             			<div class="z0"><span data-t="visitor2-2">&raquo;</span></div>
             			<div></div>
@@ -647,7 +648,7 @@
         		    
         			<div class="s16 row9">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="down" data-o="5"><input type="text" class="team" value="{{username}}"/> <!-- player 9  -->
+            			<div class="down" data-o="5"><input id="p9" type="text" class="team" value=""/> <!-- player 9  -->
             			<input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
             			<div class="z0"><span data-t="home2-3">&raquo;</span></div>
             			<div></div>
@@ -661,7 +662,7 @@
         				    
         			<div class="s16 row10">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="up" data-o="5"><input type="text" class="team" value="{{username}}"/> <!-- player 10 -->
+            			<div class="up" data-o="5"><input id="p10" type="text" class="team" value=""/> <!-- player 10 -->
             			<input type="text" class="score" /></div>
             			<div class="z1"><span data-t="home2-3">&raquo;</span></div>
             			<div class="down" data-o="3"><input type="text" class="team" disabled value=""/> <!-- round 1 match 5 winner -->
@@ -675,7 +676,7 @@
         				
         			<div class="s16 row11">
             			<div class="first"><input type="text" class="order"/></div>
-            			<div class="down" data-o="6"><input type="text" class="team" value="{{username}}"/> <!-- player 11 -->
+            			<div class="down" data-o="6"><input id="p11" type="text" class="team" value=""/> <!-- player 11 -->
             			<input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
             			<div class="z2"><span data-t="visitor2-3">&raquo;</span></div>
             			<div class="up" data-o="3"><input type="text" class="team" disabled value=""/> <!-- round 1 match 6 winner -->
@@ -689,7 +690,7 @@
         				    
         			<div class="s16 row12">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="up" data-o="6"><input type="text" class="team" value="{{username}}"/> <!-- player 12 -->
+            			<div class="up" data-o="6"><input id="p12" type="text" class="team" value=""/> <!-- player 12 -->
             			<input type="text" class="score" /></div>
             			<div class="z0"><span data-t="visitor2-3">&raquo;</span></div>
         				<div></div>
@@ -703,7 +704,7 @@
         				    
         			<div class="s16 row13">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="down" data-o="7"><input type="text" class="team" value="{{username}}"/> <!-- player 13 -->
+            			<div class="down" data-o="7"><input id="p13" type="text" class="team" value=""/> <!-- player 13 -->
             			<input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
             			<div class="z0"><span data-t="home2-4">&raquo;</span></div>
             			<div></div>
@@ -717,7 +718,7 @@
         				    
         			<div class="s16 row14">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="up" data-o="7"><input type="text" class="team" value="{{username}}"/> <!-- player 14 -->
+            			<div class="up" data-o="7"><input id="p14" type="text" class="team" value=""/> <!-- player 14 -->
             			<input type="text" class="score" /></div>
             			<div class="z1"><span data-t="home2-4">&raquo;</span></div>
             			<div class="down" data-o="4"><input type="text" class="team" disabled value=""/> <!-- round 1 match 7 winner -->
@@ -731,7 +732,7 @@
         				    
         			<div class="s16 row15">
             			<div class="first"><input type="text" class="order" /></div>
-            			<div class="down" data-o="8"><input type="text" class="team" value="{{username}}"/> <!-- player 15 -->
+            			<div class="down" data-o="8"><input id="p15" type="text" class="team" value=""/> <!-- player 15 -->
             			<input type="text" class="score" /><div class="venue"><input type="text" class="info" /></div></div>
             			<div class="z2"><span data-t="visitor2-4">&raquo;</span></div>
         				<div class="up" data-o="4"><input type="text" class="team" disabled value=""/> <!-- round 1 match 8 winner -->
@@ -745,7 +746,7 @@
         				    
         			<div class="s16 row16">
             			<div class="first"><input type="text" class="order" /></div>
-    					<div class="up" data-o="8"><input type="text" class="team" value="{{username}}"/> <!-- player 16 -->
+    					<div class="up" data-o="8"><input id="p16" type="text" class="team" value=""/> <!-- player 16 -->
     					<input type="text" class="score" /></div>
             			<div class="z0"><span data-t="visitor2-4">&raquo;</span></div>
             			<div></div>
@@ -828,14 +829,47 @@
             	}
             }
             
+            function determineGames(size) {
+                game = size;
+                if(game == 1) {
+                    updateNumberOfGames(1);
+                }
+                if(game == 2) {
+                    updateNumberOfGames(2);
+                }
+                if(game == 4) {
+                    updateNumberOfGames(3);
+                }
+                if(game == 8) {
+                    updateNumberOfGames(4);
+                }
+            }
+            
             $(document).ready(function() {
                 // score is not a part of the tournament
+                
+                var data = $("#data-in").text()
+                data = JSON.parse(data);
+                
+                determineGames(data.length);
+                
+                //dummy data
+                $("#p1").val(data[0].display_name_1);
+                $("#p2").val(data[0].display_name_2);
+                
+                $("#p3").val(data[1].display_name_1);
+                $("#p4").val(data[1].display_name_2);
+                
+                $("#p5").val(data[2].display_name_1);
+                $("#p6").val(data[2].display_name_2);
+                
+                $("#p7").val(data[3].display_name_1);
+                $("#p8").val(data[3].display_name_2);
+                
                 $("input.score").prop('disabled', true);
     			$(".rounds").fadeToggle(300);
     			$("#title").fadeToggle(300).focus();
     			// demo
-    			//updateRoundNumber(3);
-    			
     			$("#wrapSettings").hide();
     			$("body").addClass("hideMenu");
 
