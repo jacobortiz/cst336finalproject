@@ -534,7 +534,7 @@
                         Number of Players:
                     </div>
                     <div class="input">
-                        <div id="teamslider">
+                        <div id="teamslider" >
                             <div id="teams-handle" class="ui slider-handle"></div>
                         </div>
                     </div>
@@ -546,13 +546,6 @@
             <input type="text" id="title" value="{{game}}"/> <!-- Tournament title -->
             <div id="scrollTournament">
                 <div id="tournament">
-                    <!--  
-                    ATMOST
-                    round 1 has 8 matches
-                    round 2 has 4
-                    round 3 has 2
-                    round 4 is final round
-                    -->
                     <div class="row1">
                         <div class="first"><input type="text" class="order"/></div>
                         <div class="down" data-o="1"><input id="p1" type="text" class="team" value=""/>  <!-- player 1 name in value -->
@@ -829,47 +822,78 @@
             	}
             }
             
-            function determineGames(size) {
-                game = size;
-                if(game == 1) {
-                    updateNumberOfGames(1);
-                }
-                if(game == 2) {
-                    updateNumberOfGames(2);
-                }
-                if(game == 4) {
-                    updateNumberOfGames(3);
-                }
-                if(game == 8) {
-                    updateNumberOfGames(4);
-                }
-            }
-            
             $(document).ready(function() {
-                // score is not a part of the tournament
-                
                 var data = $("#data-in").text()
                 data = JSON.parse(data);
                 
-                determineGames(data.length);
+                console.log(data);
                 
-                //dummy data
-                $("#p1").val(data[0].display_name_1);
-                $("#p2").val(data[0].display_name_2);
-                
-                $("#p3").val(data[1].display_name_1);
-                $("#p4").val(data[1].display_name_2);
-                
-                $("#p5").val(data[2].display_name_1);
-                $("#p6").val(data[2].display_name_2);
-                
-                $("#p7").val(data[3].display_name_1);
-                $("#p8").val(data[3].display_name_2);
+                // prob a more efficient way to do this but oh well
+                if(data.length == 8) {
+                    $("#p1").val(data[0].display_name_1);
+                    $("#p2").val(data[0].display_name_2);
+                    
+                    $("#p3").val(data[1].display_name_1);
+                    $("#p4").val(data[1].display_name_2);
+                    
+                    $("#p5").val(data[2].display_name_1);
+                    $("#p6").val(data[2].display_name_2);
+                    
+                    $("#p7").val(data[3].display_name_1);
+                    $("#p8").val(data[3].display_name_2);
+                    
+                    
+                    $("#p9").val(data[4].display_name_1);
+                    $("#p10").val(data[4].display_name_2);
+                    
+                    $("#p11").val(data[5].display_name_1);
+                    $("#p12").val(data[5].display_name_2);
+                    
+                    $("#p13").val(data[6].display_name_1);
+                    $("#p14").val(data[6].display_name_2);
+                    
+                    $("#p15").val(data[7].display_name_1);
+                    $("#p16").val(data[7].display_name_2);
+                    
+                    updateRoundNumber(4);
+                    
+                } else if(data.length == 4) {
+                    $("#p1").val(data[0].display_name_1);
+                    $("#p2").val(data[0].display_name_2);
+                    
+                    $("#p3").val(data[1].display_name_1);
+                    $("#p4").val(data[1].display_name_2);
+                    
+                    $("#p5").val(data[2].display_name_1);
+                    $("#p6").val(data[2].display_name_2);
+                    
+                    $("#p7").val(data[3].display_name_1);
+                    $("#p8").val(data[3].display_name_2);
+                    
+                    updateRoundNumber(3);
+                    
+                    
+                } else if(data.length == 2) {
+                    $("#p1").val(data[0].display_name_1);
+                    $("#p2").val(data[0].display_name_2);
+                    
+                    $("#p3").val(data[1].display_name_1);
+                    $("#p4").val(data[1].display_name_2);
+                    
+                    updateRoundNumber(2);
+                    
+                } else {
+                    $("#p1").val(data[0].display_name_1);
+                    $("#p2").val(data[0].display_name_2);
+                    
+                    updateRoundNumber(1);
+                }
+
                 
                 $("input.score").prop('disabled', true);
     			$(".rounds").fadeToggle(300);
     			$("#title").fadeToggle(300).focus();
-    			// demo
+
     			$("#wrapSettings").hide();
     			$("body").addClass("hideMenu");
 
