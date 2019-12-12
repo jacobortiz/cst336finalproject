@@ -263,7 +263,7 @@ $(document).ready(function() {
             $("#t-s-alert").show();
             setTimeout(function () { 
                 location.reload(true); 
-            }, 2000);
+            }, 500);
         }
     }
 
@@ -277,7 +277,7 @@ $(document).ready(function() {
             $("#te-s-alert").show();
             setTimeout(function () { 
                 location.reload(true); 
-            }, 2000);
+            }, 500);
         }
     }
 
