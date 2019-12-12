@@ -314,6 +314,7 @@ span.new-here {
 .admin-info {
   background-color: #EEEEEE;
   min-height: 300px;
+  padding: 20px;
 }
 
 .table-container {
