@@ -10,48 +10,73 @@
     </head>
     
     <body>
-    
-        <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand" href="#">
-                {{title}}
-            </a>
-            <marquee id="intro" direction="left"><big><i>Final Project for CST 336, Internet Programming, made by Joseph, Kevin, Jacob, & Michael</i></big></marquee>
-            <form class="form-inline">
-                <div id="login-button">
-                    <input type="image" 
-                           src="img/login_icon.png" 
-                           name="loginButton" 
-                           class="btTxt submit" 
-                           onclick="document.getElementById('loginForm').style.display='block'"/>
+
+        <div class="modal fade" id="loginForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title-container">
+                            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        
+                        <img src="img/login.jpg" alt="login-icon" class="login-icon">
+
+                    </div>
+                    <div id="tc-modal-body" class="modal-body">
+
+                        <input type="text" id="LI_username" placeholder="Enter Username" name="username" required>
+                        
+                        <input class="form-control" id="LI_password" type="password" name="password" placeholder="Enter Password" required>
+                    
+                        <button type="submit" id="submit-login-button">Login</button>
+                        <label>
+                            <input type="checkbox" checked="checked" name="remember"> Remember me
+                        </label>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-toggle="modal" data-target="#loginForm" class="cancelbtn">Cancel</button>
+                        <span class="new-here" data-toggle="modal" data-target="#createAccountForm">New here? <a href="#">Create Account</a> </span>
+                    </div>
                 </div>
             </div>
-            </form>
-        </nav>
-        
-        <div id="loginForm" class="modal">
-            <div class="modal-content animate">
-                <div class="imgcontainer">
-                    <span onclick="document.getElementById('loginForm').style.display='none'" class="close" title="Close Modal">&times;</span>
-                    <img src="img/login.jpg" alt="login-icon" class="login-icon">
-                </div>
-                <div class="container">
-                    <input type="text" id="LI_username" placeholder="Enter Username" name="username" required>
-                    
-                    <input class="form-control" id="LI_password" type="password" name="password" placeholder="Enter Password" required>
-                   
-                    <button type="submit" id="submit-login-button">Login</button>
-                    <label>
-                        <input type="checkbox" checked="checked" name="remember"> Remember me
-                    </label>
-                </div>
-                <div class="container" style="background-color:#f1f1f1">
-                    <button type="button" onclick="document.getElementById('loginForm').style.display='none'" class="cancelbtn">Cancel</button>
-                    <span class="new-here" onclick="document.getElementById('loginForm').style.display='none'; document.getElementById('createAccountForm').style.display='block'">New here? <a href="#">Create Account</a> </span>
+        </div>
+
+         <div class="modal fade" id="createAccountForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title-container">
+                            <h5 class="modal-title" id="exampleModalLabel">Create Account</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        
+                        <img src="img/login.jpg" alt="login-icon" class="login-icon">
+
+                    </div>
+                    <div id="tc-modal-body" class="modal-body">
+
+                        <input type="text" id="CA_fname" placeholder="Enter first name" name="fname" required>
+                        <input type="text" id="CA_lname" placeholder="Enter last name" name="lname" required>
+                        <input type="number" id="CA_age" placeholder="Age" name="age" required>
+                        <input type="text" id="CA_username" placeholder="Enter Username" name="username" required>
+                        <input type="password" id="CA_password" placeholder="Enter Password" name="password" required>
+                        <button type="submit" id="create-account-button">Create Account</button>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-toggle="modal" data-target="#createAccountForm" class="cancelbtn">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div id="createAccountForm" class="modal">
+        {{!-- <div id="createAccountForm" class="modal">
             <form class="modal-content animate" action="#" method="post">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('createAccountForm').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -66,28 +91,46 @@
                     <button type="submit" id="create-account-button">Create Account</button>
                 </div>
                 <div class="container" style="background-color:#f1f1f1">
-                    <button type="button" onclick="document.getElementById('createAccountForm').style.display='none'" class="cancelbtn">Cancel</button>
+                    <button type="button" data-toggle="modal" data-target="#loginForm" class="cancelbtn">Cancel</button>
                 </div>
             </form>
-        </div>
+        </div> --}}
     
-        <div id="body-container">
-            <div id="trophy-container">
-                <div id="trophy"></div>
+        <div id="page-container">
+            <nav class="navbar navbar-light bg-light">
+                <a class="navbar-brand" href="#"> {{title}} </a>
+                <marquee id="intro" direction="left"><big><i>Final Project for CST 336, Internet Programming, made by Joseph, Kevin, Jacob, & Michael</i></big></marquee>
+                <div class="form-inline">
+                    <div id="login-button">
+                        <input type="image" 
+                            src="img/login_icon.png" 
+                            name="loginButton" 
+                            class="btTxt submit" 
+                            data-toggle="modal" data-target="#loginForm"/>
+                    </div>
+                </div>
+            </nav>
+            <div id="body-container">
+                <div id="trophy-container">
+                    <div id="trophy"></div>
+                </div>
+                
+                <div id="search-container">
+                    <div id="searchBar" style="margin:auto;max-width:800px">
+                        <input type="text" placeholder="Search in Tournaments.." id="search-field">
+                        <button type="submit" id="search-button" onclick="search()"><i class="fa fa-search"></i></button>
+                    </div>   
+                </div>
+                
+                <div class="container-fluid" style="height: 100%; width: 100%"></div>
             </div>
-            
-            <div id="search-container">
-                <div id="searchBar" style="margin:auto;max-width:800px">
-                    <input type="text" placeholder="Search in Tournaments.." id="search-field">
-                    <button type="submit" id="search-button" onclick="search()"><i class="fa fa-search"></i></button>
-                </div>   
-            </div>
-            
-            <div class="container-fluid" style="height: 100%; width: 100%"></div>
         </div>
         
         <script src="js/functions.js"></script>
-        
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
         <script>
         
         $(document).ready(function() {
