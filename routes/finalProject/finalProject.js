@@ -177,7 +177,18 @@ router.get('/logout', function(req, res) {
 
 router.post('/create_tournament', function(req, res) {
 
-    username = "kevin1";
+    username = req.session.username;
+
+    console.log(username);
+
+    if (username == undefined) {
+        console.log("NOT SIGNED IN!");
+        res.json({
+            successful: false,
+            message: 'Invalid Credentials!'
+        });
+        return;
+    }
 
     const connection = mysql.createConnection({
         host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
