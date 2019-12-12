@@ -6,15 +6,15 @@ $(document).ready(function() {
 var login_modal = document.getElementById("loginForm");
 var create_account_modal = document.getElementById("createAccountForm");
 
-window.onclick = function(event) {
-    if (event.target == login_modal) {
-        login_modal.style.display = "none";
-    }
+// window.onclick = function(event) {
+//     if (event.target == login_modal) {
+//         login_modal.style.display = "none";
+//     }
     
-    if (event.target == create_account_modal) {
-        create_account_modal.style.display = "none";
-    }
-};
+//     if (event.target == create_account_modal) {
+//         create_account_modal.style.display = "none";
+//     }
+// };
 
 $("#search-button").on("click", function (){
   
