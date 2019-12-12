@@ -64,18 +64,32 @@ $("#search-button").on("click", function (){
                   <div class="text" style="width: 20%">Tournament Created</div>
                   <div class="text" style="width: 20%">Views</div>
               </div>`).appendTo(".container-fluid"); 
-              
+            
             //populate quotes table
             for (let i = 0; i < result.tournament.length; i++) {
-                $(`<div class="table-row" style="background: white">
+                $.ajax({
+                    url: 'https://form-api.com/api/geo/country/zip',
+                    type: "get",
+                    data: {
+                            key: "trupnRbwQSI582Sltys7",
+                        country: "US",
+                        zipcode: result.tournament[i].zip,
+                    },
+                    success: function(response) {
+                        $(`<div class="table-row" style="background: white">
                         <div id="tournamentName" class="text" style="width: 20%; color: black">
                             ${result.tournament[i].title}
                         </div>
-                        <div class="text" style="width: 20%; color: black">${result.tournament[i].fullName}</div>
-                        <div class="text" style="width: 20%; color: black">${result.tournament[i].zip}</div>
-                        <div class="text" style="width: 20%; color: black">${result.tournament[i].created.split("T", 1)}</div>
-                        <div class="text" style="width: 20%; color: black"> <button onclick="window.location.href = './bracketing?title=${result.tournament[i].title.replace(" ", "%20")}'">View</button> </div>
-                  </div>`).appendTo(".container-fluid"); 
+                            <div class="text" style="width: 20%; color: black">${result.tournament[i].fullName}</div>
+                            <div class="text" style="width: 20%; color: black">${response.result.city}</div>
+                            <div class="text" style="width: 20%; color: black">${result.tournament[i].created.split("T", 1)}</div>
+                            <div class="text" style="width: 20%"> <button class="btn-primary" onclick="window.location.href = './bracketing?title=${result.tournament[i].title.replace(" ", "%20")}'">View</button></div>
+                        </div>`).appendTo(".container-fluid"); 
+                    },
+                    error: function(xhr) {
+                        console.log("AJAX Request couldn't be fulfilled!", xhr);
+                    }
+                });
             }
         },
         error: function(xhr, status, error) {
@@ -86,7 +100,7 @@ $("#search-button").on("click", function (){
     
     return;
 });
-           
+
 $('#submit-login-button').on('click', function(e) {
     e.preventDefault();
     
@@ -182,6 +196,6 @@ $('#logout-button').on('click', function(e) {
             console.log(status);
         }
     });
-})
+});
 
 

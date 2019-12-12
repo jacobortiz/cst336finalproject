@@ -10,7 +10,7 @@ router.get("/new", function(req, res) {
 });
 
 router.get("/create_tournament", function(req, res) {
-    res.render('finalProject/create_tournament')
+    res.render('finalProject/create_tournament');
 });
 
 // Home Page...
@@ -41,7 +41,7 @@ router.get('/bracketing', function(req, res) {
     connection.connect();
         
     connection.query(sql, (error, results, fields) => {
-        if(error) throw error
+        if(error) throw error;
         
         res.render('finalProject/bracketing', {
            title: title,
@@ -84,22 +84,21 @@ router.post('/login', function(req, res) {
         let typed_pswd = req.body.password;
         
         bcrypt.compare(typed_pswd, actual_pswd, function(error, result) {
-                if (error) throw error;
-                
-                if(result) {
-                    req.session.username = req.body.username;
-                    res.json({
-                        successful: true,
-                        message: ""
-                    });
-                
-                } else {
-                    delete req.session.username;
-                    res.json({
-                        successful: false,
-                        message: "incorrect password"
-                    });
-                } 
+            if (error) throw error;
+            
+            if(result) {
+                req.session.username = req.body.username;
+                res.json({
+                    successful: true,
+                    message: ""
+                });
+            } else {
+                delete req.session.username;
+                res.json({
+                    successful: false,
+                    message: "incorrect password"
+                });
+            } 
         });
     });     
     
@@ -107,7 +106,6 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/admin', function(req, res) {
-    
     if (req.session && req.session.username && req.session.username.length) {
 
         const connection = mysql.createConnection({
@@ -134,11 +132,11 @@ router.get('/admin', function(req, res) {
                 title: 'Admin',
                 username: req.session.username,
                 empty: results.length == 0,
-                tournaments: results
+                tournaments: results,
             });
+
+            connection.end();
         });
-        
-        connection.end();
         
     } else {
         delete req.session.username;
@@ -147,7 +145,6 @@ router.get('/admin', function(req, res) {
 });
 
 router.post('/create_account', function(req, res) {
-    
     const connection = mysql.createConnection({
         host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
         user: 'u4iixpff4n2b1uam',
@@ -161,7 +158,6 @@ router.post('/create_account', function(req, res) {
                                       FROM user u 
                                       WHERE u.username LIKE '${req.body.username}'`;
     
-
     connection.query(SQLCommand_checkUserExists, (error, results, fields) => {
         if (error) throw error;
      
@@ -173,7 +169,6 @@ router.post('/create_account', function(req, res) {
             return;
         }
         
-        console.log("MAde it??");
         let SQLCommand_addNewUser = `INSERT INTO user(username, hash, firstName, lastName, age, created) VALUES (?, ?, ?, ?, ?, ?)`;
     
         let uname = req.body.username;
@@ -196,9 +191,8 @@ router.post('/create_account', function(req, res) {
                 connection.end();
                 return;
             });
-    });
+        });
     }); 
-    
 });
 
 router.get('/logout', function(req, res) {
@@ -254,15 +248,116 @@ router.post('/find_tournament', function(req, res){
    
     connection.query(SQLCommand, (error, results, fields) => {
         if (error) throw error;
-        
-        console.log("Results from tournament search:\n", results);
-            res.json({
-                tournament: results
-            });
+    
+        res.json({
+            tournament: results
+        });
     });   
     
     
     connection.end();
+});
+
+router.post('/delete_tournament', function (req, res) {
+
+});
+
+router.post('/edit_tournament', function (req, res) {
+    
+    username = req.session.username;
+
+    console.log(username);
+
+    if (username == undefined) {
+        console.log("NOT SIGNED IN!");
+        res.json({
+            successful: false,
+            message: 'Invalid Credentials!'
+        });
+        return;
+    }
+
+    const connection = mysql.createConnection({
+        host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user: 'u4iixpff4n2b1uam',
+        password: 'gszyw5nfp2os51lq',
+        database: 'c2cyppf6xaxjv2wy'
+    });
+
+    connection.connect();
+
+    let successful = false;
+    let message = '';
+
+    date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+    connection.query(
+        "UPDATE tournament SET levels=?, zip=? WHERE title=?;", 
+        [req.body.levels, req.body.zip, req.body.title], 
+        (error, results, fields) => {
+            if (error) {
+                res.json({
+                    successful: false,
+                    message: 'Error: Title already exists!'
+                });
+                return;
+            }
+
+            console.log("Tournament updated in database!");
+
+            connection.query(
+                "DELETE FROM bracket WHERE title=?",
+                [req.body.title],
+                (error, results, fields) => {
+                    if (error) {
+                        res.json({
+                            successful: false,
+                            message: 'Error: Title already exists!'
+                        });
+                        return;
+                    }
+
+                    console.log(req.body.matches);
+                    let c = 1;
+                    for (match of req.body.matches) {
+                
+                        connection.query(
+                            'INSERT INTO bracket(title, level, position, display_name_1, display_name_2, created) VALUES (?, ?, ?, ?, ?, ?)',
+                            [req.body.title, req.body.levels, c, match[0], match[1], date],
+                            (error, results, fields) => {
+                                if (error) {
+                                    res.json({
+                                        successful: false,
+                                        message: 'Error: Contact Kevin!'
+                                    });
+                                    return;
+                                }
+
+                                if (c == req.body.matches.length) {
+                                    console.log("Finished Bracket making!")
+                                    res.json({
+                                        successful: true,
+                                        message: 'success'
+                                    });
+                                    connection.end();
+                                    return;
+                                } else {
+                                    console.log("Creating another bracket! " + c + " - " + req.body.matches.length);
+                                }
+
+                                c += 1;
+                            }
+                        );
+                        
+                    }       
+
+                }
+            );
+
+            
+        }
+    );
+    
 });
 
 router.post('/create_tournament', function(req, res) {
@@ -303,6 +398,7 @@ router.post('/create_tournament', function(req, res) {
                     successful: false,
                     message: 'Error: Title already exists!'
                 });
+                connection.end();
                 return;
             }
 
@@ -321,26 +417,28 @@ router.post('/create_tournament', function(req, res) {
                                 successful: false,
                                 message: 'Error: Contact Kevin!'
                             });
+                            connection.end();
                             return;
                         }
 
                         if (c == req.body.matches.length) {
+                            console.log("Finished Bracket making!")
                             res.json({
                                 successful: true,
                                 message: 'success'
                             });
                             connection.end();
                             return;
+                        } else {
+                            console.log("Creating another bracket! " + c + " - " + req.body.matches.length);
                         }
 
+                        c += 1;
                     }
                 );
-
-                c += 1;
             }
         }
     );
-    connection.end();
 });
 
 module.exports = router;
