@@ -16,56 +16,74 @@ window.onclick = function(event) {
     }
 };
 
-
-// array used as an example, data will come from a DB
-let tournaments = [{name: "Mortal Kombat",
-                    tournamentManager: "Shao Kahn",
-                    numOfPlayers: 12},
-                   {name: "Super Smash Bros.",
-                    tournamentManager: "Mario",
-                    numOfPlayers: 8}, 
-                   {name: "Street Fighter",
-                    tournamentManager: "Ryu",
-                    numOfPlayers: 14}, 
-                   {name: "Mario Kart",
-                    tournamentManager: "Wario",
-                    numOfPlayers: 7}];
-
-function search() {
-    
-    $(".container-fluid").empty();
-            
-    let keyword = $("#search-field").val();
+$("#search-button").on("click", function (){
   
-    if(keyword == "") {
-        alert("Please fill in empty fields");
+    if($("#search-field").val() == "") {
+         $(`<div class="alert alert-danger mt-3" 
+                style="width: 100%; text-align: center">
+                    "Please fill empty fields"
+           </div>`).appendTo(".container-fluid"); 
         return;
     }
-  
-    $(`<div class="table-row header" style="background: #2196F3">
-            <div class="text" style="width: 20%">Tournament Name</div>
-            <div class="text" style="width: 20%">Tournament Manager</div>
-            <div class="text" style="width: 60%">Number of Players</div>
-       </div>`).appendTo(".container-fluid"); 
     
-    for (let i = 0; i < tournaments.length; i++) {
-        if (tournaments[i].name.includes(keyword)) {
-            $(`<div class="table-row">
-                    <div id="tournamentName" class="text" style="width: 20%; color: white">
-                        ${tournaments[i].name}
-                    </div>
-                    <div class="text" style="width: 20%; color: white">${tournaments[i].tournamentManager}</div>
-                    <div class="text" style="width: 60%; color: white">${tournaments[i].numOfPlayers}</div>
-               </div>`).appendTo(".container-fluid"); 
+    if ($("#searchBy").val() == "") {
+        $(`<div class="alert alert-danger mt-3" 
+                style="width: 100%; text-align: center">
+                    "Please fill field: Search By..."
+           </div>`).appendTo(".container-fluid"); 
+        return;
+    }
+    
+    $.ajax({
+        type: "POST",
+        url: "/finalProject/find_tournament",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify({
+             "keyword": $("#search-field").val(),
+            "searchBy": $("#searchBy").val()
+        }),
+        success: function(result, status) {
+            document.querySelector('#search-field').value = '';
+            $("#searchBy").prop('selectedIndex', 0);
+            $(".container-fluid").empty();
+            
+            if(result.tournament.length == 0) {
+                $(`<div class="alert alert-danger mt-3" 
+                        style="width: 100%; text-align: center">
+                            "No results found :^("
+                   </div>`).appendTo(".container-fluid"); 
+                return;
+            }
+            
+            //set quotes table head
+            $(`<div class="table-row header" style="background: #2196F3">
+                  <div class="text" style="width: 25%">Tournament Name</div>
+                  <div class="text" style="width: 25%">Tournament Manager</div>
+                  <div class="text" style="width: 25%">Tournament Location</div>
+                  <div class="text" style="width: 25%">Tournament Created</div>
+              </div>`).appendTo(".container-fluid"); 
+              
+            //populate quotes table
+            for (let i = 0; i < result.tournament.length; i++) {
+                $(`<div class="table-row" style="background: white">
+                        <div id="tournamentName" class="text" style="width: 25%; color: black">
+                            ${result.tournament[i].title}
+                        </div>
+                        <div class="text" style="width: 25%; color: black">${result.tournament[i].fullName}</div>
+                        <div class="text" style="width: 25%; color: black">${result.tournament[i].zip}</div>
+                        <div class="text" style="width: 25%; color: black">${result.tournament[i].created.split("T", 1)}</div>
+                  </div>`).appendTo(".container-fluid"); 
+            }
+        },
+        error: function(xhr, status, error) {
+            error = eval("error: (" + xhr.responseText + ")");
+            console.error(error);
         }
-    }
-  
-    if ($(".table-row").text().length == 0) {
-        $("Tournament not found! :^(").appendTo(".container-fluid");
-    }
+    });
     
     return;
-}
+});
            
 $('#submit-login-button').on('click', function(e) {
     e.preventDefault();
@@ -101,7 +119,6 @@ $('#submit-login-button').on('click', function(e) {
 
 $('#create-account-button').on('click', function(e) {
     e.preventDefault();
-
     
     $.ajax({
         type: "POST",
@@ -118,6 +135,7 @@ $('#create-account-button').on('click', function(e) {
         success: function(result, status) {
             console.log("got login status back", result);
             if (result.successful) {
+                alert("Account Created");
                 window.location.href = '/finalProject';
             }
             else {

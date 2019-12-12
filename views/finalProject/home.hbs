@@ -76,7 +76,13 @@
         
         <div id="searchBar" style="margin:auto;max-width:800px">
           <input type="text" placeholder="Search in Tournaments.." id="search-field">
-          <button type="submit" id="search-button" onclick="search()"><i class="fa fa-search"></i></button>
+          <select name="searchBy" id="searchBy">
+                <option value="" selected>Select One</option>
+                <option value="title">title</option>
+                <option value="username">username</option>
+                <option value="zip">zip</option>
+            </select>
+          <button type="submit" id="search-button"><i class="fa fa-search"></i></button>
         </div>   
         
         <br><br>
