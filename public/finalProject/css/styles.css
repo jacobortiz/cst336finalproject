@@ -306,3 +306,17 @@ span.new-here {
   border-right: 1px solid black;
   width: auto !important;
 }
+
+.table {
+  background-color: white !important;
+}
+
+.admin-info {
+  background-color: #EEEEEE;
+  min-height: 300px;
+}
+
+.table-container {
+  height: 100%;
+  background-color: white;
+}

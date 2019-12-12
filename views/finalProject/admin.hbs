@@ -65,7 +65,8 @@
             </div>
         </div>
         
-        <nav class="navbar navbar-light bg-light">
+        <div id="page-container">
+            <nav class="navbar navbar-light bg-light">
                 <a class="navbar-brand" href="#"> {{title}} </a>
                 <marquee id="intro" direction="left"><big><i>Final Project for CST 336, Internet Programming, made by Joseph, Kevin, Jacob, & Michael</i></big></marquee>
                 <div class="form-inline">
@@ -74,37 +75,53 @@
                     </button>
                     <div id="logout-button">
                         <input type="image" 
-                           src="img/login_icon.png" 
-                           name="logoutButton" 
-                           class="btTxt submit"/>
+                            src="img/login_icon.png" 
+                            name="logoutButton" 
+                            class="btTxt submit"/>
                     </div>
                 </div>
             </nav>
-        
-        Welcome, {{username}}. Here is a list of tournaments available to join
-        <!--- The Hardcoded lines need to be replaced. --->
-        <table>
-            <tr>
-                <th>Game</th>
-                <th>Admin</th>
-                <th>Player Count</th>
-            </tr>
-            <tr>
-                <th>Mortal Kombat</th>
-                <th>Sonja</th>
-                <th>7</th>
-            </tr>
-            <tr>
-                <th>Supersmash Bros.</th>
-                <th>Mario</th>
-                <th>15</th>
-            </tr>
-            <tr>
-                <th>Street Fighter</th>
-                <th>Ryu</th>
-                <th>2</th>
-            </tr>
-        </table>
+            <div id="body-container">
+                <div class="admin-info">
+                    <h1>Welcome, {{username}}. Here is a list of tournaments available to join</h1>
+                </div>
+
+                <div class="table-container">
+                    <table class="table admin-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Participants</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Zip</th>
+                                <th scope="col">View</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#if empty}}
+                                <tr>
+                                    <th scrope="row">No Records found!</th>
+                                </tr>
+                            {{/if}}
+                            {{#each tournaments}}
+                                <tr>
+                                    <th scope="row">{{title}}</th>
+                                    <td>{{levels}}</td>
+                                    <td>{{created}}</td>
+                                    <td>{{zip}}</td>
+                                    <td><button type="button" class="btn btn-info" onclick="window.location.href='./bracketing?title=`{{title}}`.replace(` `, `%20`)}'">View</button></td>
+                                    <td><button type="button" class="btn btn-primary">Edit</button></td>
+                                    <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <script src="js/functions.js"></script>
         
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

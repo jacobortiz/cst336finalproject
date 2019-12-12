@@ -81,42 +81,7 @@
           .showwinner .loser .team, .showwinner .loser .score .NaN {
           	opacity: 0.65;
           }
-          
-          a#more, a#menu {
-              position: absolute;
-              color: black;
-              text-decoration: none;
-              padding: 30px;
-              right: 0;
-              bottom: 0;
-              cursor: pointer;
-              opacity: 0.6;
-          	z-index: 9;
-          }
-          
-          a#more:hover, a#menu:hover {
-          	opacity: 1;
-          }
-          a#smallLogo {
-              position: absolute;
-              top: 10px;
-              left: 10px;
-              z-index: 3;
-              color: #616d79;
-              font-size: 14px;
-              text-decoration: none;
-          }
-          a#smallLogo:hover {
-          	color: #000;
-          }
-          a#menu {
-              top: 0px;
-              bottom: auto;
-              font-size: 40px;
-              font-weight: normal;
-              z-index: 5;
-              padding: 10px 20px;
-          }
+
           #wrapSettings {
           	z-index: 4;
           	overflow: hidden;
@@ -338,7 +303,6 @@
           }
           .checkbox, .button {
               display: inline-block;
-              background: url(sprite.png) no-repeat 9px -37px #616d79;
               color: #FFF;
               padding: 5px 10px 5px 30px;
               font-size: 13px;
@@ -347,50 +311,21 @@
               border-radius: 10px;
           }
           
-          .flashit {
-          	background-color: #a8a9ab;
-          }
           .hiddenfinalwinner .final, .hiddenfinalwinner .winnerLabel,
           .show2 .hiddenfinalwinner .row1 .z10, .show4 .hiddenfinalwinner .row2 .z10, .show8 .hiddenfinalwinner .row4 .z10, .show16 .hiddenfinalwinner .row8 .z10, .show32 .hiddenfinalwinner .row16 .z10,
           .show2 .hiddenfinalwinner .row2 .z1, .show4 .hiddenfinalwinner .row3 .z6, .show8 .hiddenfinalwinner .row5 .z6, .show16 .hiddenfinalwinner .row9 .z6, .show32 .hiddenfinalwinner .row17 .z6 {
           	display: none !important;
           }
-          .button {
-          	background-image: none;
-          	padding: 5px 10px 5px 10px;
-          }
-          .checkbox.active, .button:active {
-          	background-position: 9px 3px;
-          }
-          .checkbox:hover, .ui-slider-handle:hover, .button:hover {
-          	background-color: #304963 !important;
-          }
-          .hidescore #autoadvance {
-          	opacity: 0.3;
-          }
+          
           .first {
           	display: none;
           }
-          .ordered .first {
-          	display: block;
-          }
+
           .above {
           	position: absolute;
           	top: -10px;
           }
           
-          .narrow #tournament > div > div input.info {
-              height: 13px;
-              font-size: 0.8em;
-          }
-          .narrow .venue {
-          top: -5px;
-          }
-          .narrow #tournament > div > div {
-          	position: relative;
-              height: 20px;
-              padding: 5px 0;
-          }
           .narrow #tournament > div > div.down {
           	padding: 5px 0 0 0;
           }
@@ -534,25 +469,18 @@
                         Number of Players:
                     </div>
                     <div class="input">
-                        <div id="teamslider">
+                        <div id="teamslider" >
                             <div id="teams-handle" class="ui slider-handle"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <a id="menu">
+            <a id="menu" style="display:none">
                 &equiv;
             </a>
             <input type="text" id="title" value="{{game}}"/> <!-- Tournament title -->
             <div id="scrollTournament">
                 <div id="tournament">
-                    <!--  
-                    ATMOST
-                    round 1 has 8 matches
-                    round 2 has 4
-                    round 3 has 2
-                    round 4 is final round
-                    -->
                     <div class="row1">
                         <div class="first"><input type="text" class="order"/></div>
                         <div class="down" data-o="1"><input id="p1" type="text" class="team" value=""/>  <!-- player 1 name in value -->
@@ -829,47 +757,79 @@
             	}
             }
             
-            function determineGames(size) {
-                game = size;
-                if(game == 1) {
-                    updateNumberOfGames(1);
-                }
-                if(game == 2) {
-                    updateNumberOfGames(2);
-                }
-                if(game == 4) {
-                    updateNumberOfGames(3);
-                }
-                if(game == 8) {
-                    updateNumberOfGames(4);
-                }
-            }
-            
             $(document).ready(function() {
-                // score is not a part of the tournament
                 
                 var data = $("#data-in").text()
                 data = JSON.parse(data);
                 
-                determineGames(data.length);
+                console.log(data);
                 
-                //dummy data
-                $("#p1").val(data[0].display_name_1);
-                $("#p2").val(data[0].display_name_2);
-                
-                $("#p3").val(data[1].display_name_1);
-                $("#p4").val(data[1].display_name_2);
-                
-                $("#p5").val(data[2].display_name_1);
-                $("#p6").val(data[2].display_name_2);
-                
-                $("#p7").val(data[3].display_name_1);
-                $("#p8").val(data[3].display_name_2);
+                // prob a more efficient way to do this but oh well
+                if(data.length == 8) {
+                    $("#p1").val(data[0].display_name_1);
+                    $("#p2").val(data[0].display_name_2);
+                    
+                    $("#p3").val(data[1].display_name_1);
+                    $("#p4").val(data[1].display_name_2);
+                    
+                    $("#p5").val(data[2].display_name_1);
+                    $("#p6").val(data[2].display_name_2);
+                    
+                    $("#p7").val(data[3].display_name_1);
+                    $("#p8").val(data[3].display_name_2);
+                    
+                    
+                    $("#p9").val(data[4].display_name_1);
+                    $("#p10").val(data[4].display_name_2);
+                    
+                    $("#p11").val(data[5].display_name_1);
+                    $("#p12").val(data[5].display_name_2);
+                    
+                    $("#p13").val(data[6].display_name_1);
+                    $("#p14").val(data[6].display_name_2);
+                    
+                    $("#p15").val(data[7].display_name_1);
+                    $("#p16").val(data[7].display_name_2);
+                    
+                    updateRoundNumber(4);
+                    
+                } else if(data.length == 4) {
+                    $("#p1").val(data[0].display_name_1);
+                    $("#p2").val(data[0].display_name_2);
+                    
+                    $("#p3").val(data[1].display_name_1);
+                    $("#p4").val(data[1].display_name_2);
+                    
+                    $("#p5").val(data[2].display_name_1);
+                    $("#p6").val(data[2].display_name_2);
+                    
+                    $("#p7").val(data[3].display_name_1);
+                    $("#p8").val(data[3].display_name_2);
+                    
+                    updateRoundNumber(3);
+                    
+                    
+                } else if(data.length == 2) {
+                    $("#p1").val(data[0].display_name_1);
+                    $("#p2").val(data[0].display_name_2);
+                    
+                    $("#p3").val(data[1].display_name_1);
+                    $("#p4").val(data[1].display_name_2);
+                    
+                    updateRoundNumber(2);
+                    
+                } else {
+                    $("#p1").val(data[0].display_name_1);
+                    $("#p2").val(data[0].display_name_2);
+                    
+                    updateRoundNumber(1);
+                }
+
                 
                 $("input.score").prop('disabled', true);
     			$(".rounds").fadeToggle(300);
     			$("#title").fadeToggle(300).focus();
-    			// demo
+
     			$("#wrapSettings").hide();
     			$("body").addClass("hideMenu");
 
