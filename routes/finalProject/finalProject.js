@@ -28,33 +28,59 @@ router.get('/bracketing', function(req, res) {
        game: '?',
     }); 
 });
+
     
-router.post('/', function(req, res) {
-
-    console.log('inside login post');
-
-    let successful = false;
-    let message = '';
+router.post('/login', function(req, res) {
     
-    // TODO: replace with MySQL SELECT and hashing/salting...
-    if (req.body.username === 'hello' && req.body.password === 'world') {
-        successful = true;
-        req.session.username = req.body.username;
-    }
-    else {
-        // delete the user as punishment!
-        delete req.session.username;
-        message = 'Wrong username or password!'
-    }
-
-    console.log('session username', req.session.username);
-
-    // Return success or failure
-    res.json({
-        successful: successful,
-        message: message
+    const connection = mysql.createConnection({
+        host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user: 'u4iixpff4n2b1uam',
+        password: 'gszyw5nfp2os51lq',
+        database: 'c2cyppf6xaxjv2wy'
     });
+    
+    connection.connect();
+    
+    let SQLCommand_checkUserExists = `SELECT u.hash
+                                      FROM user u 
+                                      WHERE u.username LIKE '${req.body.username}'`;
+    
 
+    connection.query(SQLCommand_checkUserExists, (error, results, fields) => {
+        if (error) throw error;
+        if (results.length == 0) {
+             res.json({
+                successful: false,
+                message: "incorrect username"
+            });
+            return;
+        }
+        
+        let actual_pswd = results[0].hash;
+        let typed_pswd = req.body.password;
+        
+        bcrypt.compare(typed_pswd, actual_pswd, function(error, result) {
+                if (error) throw error;
+                
+                console.log("RES", result);
+                if(result) {
+                    req.session.username = req.body.username;
+                    res.json({
+                        successful: true,
+                        message: ""
+                    });
+                
+                } else {
+                    delete req.session.username;
+                    res.json({
+                        successful: false,
+                        message: "incorrect password"
+                    });
+                
+                } 
+        });
+    });     
+    connection.end();
 });
 
 router.get('/admin', function(req, res) {
@@ -73,50 +99,66 @@ router.get('/admin', function(req, res) {
 });
 
 router.post('/create_account', function(req, res) {
-
-    console.log('inside create_account post');
-
-    // bcrypt.hash(req.body.password, 8, function(err, hash) {
-    //     console.log("Hash: " + hash);
-
-    //     // imagine mysql grab right here
-
-    //     bcrypt.compare('somePassword', hash, function(err, res) {
-    //         if(res) {
-    //             console.log("PASSWORD MATCHES!");
-    //         } else {
-    //             console.log("PASSWORD DOESNT MATCH");
-    //         } 
-    //       });
-    // });
-
-    bcrypt.hash(req.body.password, 8, function(err, hash) {
-
-        date = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
-        const connection = mysql.createConnection({
-            host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-            user: 'u4iixpff4n2b1uam',
-            password: 'gszyw5nfp2os51lq',
-            database: 'c2cyppf6xaxjv2wy'
-        });
     
-        connection.connect();
+    const connection = mysql.createConnection({
+        host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user: 'u4iixpff4n2b1uam',
+        password: 'gszyw5nfp2os51lq',
+        database: 'c2cyppf6xaxjv2wy'
+    });
+    
+    connection.connect();
+    
+    let SQLCommand_checkUserExists = `SELECT u.username
+                                      FROM user u 
+                                      WHERE u.username LIKE '${req.body.username}'`;
+    
+
+    connection.query(SQLCommand_checkUserExists, (error, results, fields) => {
+        if (error) throw error;
+     
+        if (results.length != 0) {
+             res.json({
+                successful: false,
+                message: "username taken"
+            });
+            return;
+        }
         
-        connection.query(
-            'INSERT INTO user(username, hash, firstName, lastName, age, created) VALUES (?, ?, ?, ?, ?, ?)', [req.body.username, hash, req.body.fname, req.body.lname, req.body.age, date],
-            (error, results, fields) => {
+        console.log("MAde it??");
+        let SQLCommand_addNewUser = `INSERT INTO user(username, hash, firstName, lastName, age, created) VALUES (?, ?, ?, ?, ?, ?)`;
+    
+        let uname = req.body.username;
+        let pswd = req.body.password;
+        let fname = req.body.fname;
+        let lname = req.body.lname;
+        let age = req.body.age;
+        let created = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        
+        bcrypt.hash(pswd, 8, function(err, hash) {
+            if (err) throw err;
+            connection.query(SQLCommand_addNewUser, [uname, hash, fname, lname, age, created], (error, results, fields) => {
                 if (error) throw error;
+                
                 res.json({
                     successful: true,
                     message: "account created"
                 });
+                
+                connection.end();
+                return;
             });
-        
-        connection.end();
     });
-});
+    }); 
+    
+   
+    
 
+    
+    
+    
+});
+    
 
 router.get('/logout', function(req, res) {
     if (req.session && req.session.username && req.session.username.length) {
