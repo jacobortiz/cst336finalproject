@@ -126,12 +126,36 @@ router.post('/login', function(req, res) {
 router.get('/admin', function(req, res) {
     
     if (req.session && req.session.username && req.session.username.length) {
-        res.render('finalProject/admin', {
-            title: 'Admin',
-            username: req.session.username
+
+        const connection = mysql.createConnection({
+            host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+            user: 'u4iixpff4n2b1uam',
+            password: 'gszyw5nfp2os51lq',
+            database: 'c2cyppf6xaxjv2wy'
         });
-    }
-    else {
+        
+        connection.connect();
+
+        let query = `SELECT title, levels, zip, created FROM tournament WHERE username="${req.session.username}";`;
+        
+        connection.query(query, (error, results, fields) => {
+            if (error) throw error;
+
+            console.log(results);
+
+            for (result of results) {
+                result["levels"] = Math.pow(2, result["levels"])
+            }
+
+            res.render('finalProject/admin', {
+                title: 'Admin',
+                username: req.session.username,
+                empty: results.length == 0,
+                tournaments: results
+            });
+
+        });
+    } else {
         delete req.session.username;
         res.redirect('/finalProject/');
     }

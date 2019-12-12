@@ -90,31 +90,32 @@
                     <table class="table admin-table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Participants</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Zip</th>
+                                <th scope="col">View</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
+                            {{#if empty}}
+                                <tr>
+                                    <th scrope="row">No Records found!</th>
+                                </tr>
+                            {{/if}}
+                            {{#each tournaments}}
+                                <tr>
+                                    <th scope="row">{{title}}</th>
+                                    <td>{{levels}}</td>
+                                    <td>{{created}}</td>
+                                    <td>{{zip}}</td>
+                                    <td><button type="button" class="btn btn-info" onclick="window.location.href='./bracketing?title=`{{title}}`.replace(` `, `%20`)}'">View</button></td>
+                                    <td><button type="button" class="btn btn-primary">Edit</button></td>
+                                    <td><button type="button" class="btn btn-danger">Delete</button></td>
+                                </tr>
+                            {{/each}}
                         </tbody>
                     </table>
                 </div>
