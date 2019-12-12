@@ -115,6 +115,8 @@ header #login-button, #logout-button {
   justify-content: space-between;
 }
 
+
+
 /* ---------- Styling for Login Modal --------- */
 
 #LI_username, #CA_username, #LI_password, #CA_password, #CA_fname, #CA_lname, #CA_age {
@@ -256,9 +258,9 @@ span.new-here {
   padding-right: 20px;
 }
 
-.text {
+/* .text {
   width: 180px;
-}
+} */
 
 .table-row {
   border-bottom: 2px solid #e0e0e0;
@@ -302,4 +304,5 @@ span.new-here {
 #intro {
   border-left: 1px solid black;
   border-right: 1px solid black;
+  width: auto !important;
 }
