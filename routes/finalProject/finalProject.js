@@ -23,50 +23,33 @@ router.get('/', function(req, res) {
 // bracketing
 router.get('/bracketing', function(req, res) {
     
-    // EXAMPLE LINK - /bracketing?username=kevin1&title=GTX%2012
+    // EXAMPLE LINK - /bracketing?title=GTX%2012
+
+    title = req.query.title;
     
-    // MYSQL CALL
+    const sql = `SELECT level, position, won, display_name_1, display_name_2 
+    from bracket where title="${title}" ORDER BY level DESC, position ASC;`;
+
     
-    // -
-    // -  -  _
-    // -  -
-    // -
+    const connection = mysql.createConnection({
+        host:       'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user:       'u4iixpff4n2b1uam',
+        password:   'gszyw5nfp2os51lq',
+        database:   'c2cyppf6xaxjv2wy'
+    });
     
-    var fake_data = [
-        {
-        "level": 3,
-        "position": 1,
-        "display_name_1": "kevin",
-        "display_name_2": "jacob",
-        "won": "NULL"
-        },
-        {
-        "level": 3,
-        "position": 2,
-        "display_name_1": "cat",
-        "display_name_2": "dog",
-        "won": "NULL"
-        },
-        {
-        "level": 3,
-        "position": 3,
-        "display_name_1": "eagle",
-        "display_name_2": "hawk",
-        "won": "NULL"
-        },
-        {
-        "level": 3,
-        "position": 4,
-        "display_name_1": "mario",
-        "display_name_2": "sonic",
-        "won": "NULL"
-        }];
+    connection.connect();
         
-    res.render('finalProject/bracketing', {
-       title: 'Tournament Brackets',
-       game: '?',
-       data: JSON.stringify(fake_data)
-    }); 
+    connection.query(sql, (error, results, fields) => {
+        if(error) throw error
+        
+        res.render('finalProject/bracketing', {
+           title: title,
+           game: title,
+           data: JSON.stringify(results)
+        }); 
+        
+    });
 });
 
     
@@ -84,7 +67,6 @@ router.post('/login', function(req, res) {
     let SQLCommand_checkUserExists = `SELECT u.hash
                                       FROM user u 
                                       WHERE u.username LIKE '${req.body.username}'`;
-    
 
     connection.query(SQLCommand_checkUserExists, (error, results, fields) => {
         if (error) throw error;
@@ -159,7 +141,6 @@ router.get('/admin', function(req, res) {
         delete req.session.username;
         res.redirect('/finalProject/');
     }
-    
 });
 
 router.post('/create_account', function(req, res) {
@@ -214,12 +195,6 @@ router.post('/create_account', function(req, res) {
             });
     });
     }); 
-    
-   
-    
-
-    
-    
     
 });
 
