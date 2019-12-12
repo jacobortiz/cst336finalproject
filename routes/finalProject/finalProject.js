@@ -10,7 +10,7 @@ router.get("/new", function(req, res) {
 });
 
 router.get("/create_tournament", function(req, res) {
-    res.render('finalProject/create_tournament')
+    res.render('finalProject/create_tournament');
 });
 
 // Home Page...
@@ -25,7 +25,7 @@ router.get('/bracketing', function(req, res) {
     
     // EXAMPLE LINK - /bracketing?title=GTX%2012
 
-    title = req.query.title;
+    var title = req.query.title;
     
     const sql = `SELECT level, position, won, display_name_1, display_name_2 
     from bracket where title="${title}" ORDER BY level DESC, position ASC;`;
@@ -41,7 +41,7 @@ router.get('/bracketing', function(req, res) {
     connection.connect();
         
     connection.query(sql, (error, results, fields) => {
-        if(error) throw error
+        if(error) throw error;
         
         res.render('finalProject/bracketing', {
            title: title,
@@ -50,9 +50,10 @@ router.get('/bracketing', function(req, res) {
         }); 
         
     });
+    
+    connection.end();
 });
 
-    
 router.post('/login', function(req, res) {
     
     const connection = mysql.createConnection({
@@ -83,22 +84,21 @@ router.post('/login', function(req, res) {
         let typed_pswd = req.body.password;
         
         bcrypt.compare(typed_pswd, actual_pswd, function(error, result) {
-                if (error) throw error;
-                
-                if(result) {
-                    req.session.username = req.body.username;
-                    res.json({
-                        successful: true,
-                        message: ""
-                    });
-                
-                } else {
-                    delete req.session.username;
-                    res.json({
-                        successful: false,
-                        message: "incorrect password"
-                    });
-                } 
+            if (error) throw error;
+            
+            if(result) {
+                req.session.username = req.body.username;
+                res.json({
+                    successful: true,
+                    message: ""
+                });
+            } else {
+                delete req.session.username;
+                res.json({
+                    successful: false,
+                    message: "incorrect password"
+                });
+            } 
         });
     });     
     
@@ -106,7 +106,6 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/admin', function(req, res) {
-    
     if (req.session && req.session.username && req.session.username.length) {
 
         const connection = mysql.createConnection({
@@ -138,6 +137,8 @@ router.get('/admin', function(req, res) {
 
             connection.end();
         });
+        
+        connection.end();
     } else {
         delete req.session.username;
         res.redirect('/finalProject/');
@@ -145,7 +146,6 @@ router.get('/admin', function(req, res) {
 });
 
 router.post('/create_account', function(req, res) {
-    
     const connection = mysql.createConnection({
         host: 'ui0tj7jn8pyv9lp6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
         user: 'u4iixpff4n2b1uam',
@@ -159,7 +159,6 @@ router.post('/create_account', function(req, res) {
                                       FROM user u 
                                       WHERE u.username LIKE '${req.body.username}'`;
     
-
     connection.query(SQLCommand_checkUserExists, (error, results, fields) => {
         if (error) throw error;
      
@@ -171,7 +170,6 @@ router.post('/create_account', function(req, res) {
             return;
         }
         
-        console.log("MAde it??");
         let SQLCommand_addNewUser = `INSERT INTO user(username, hash, firstName, lastName, age, created) VALUES (?, ?, ?, ?, ?, ?)`;
     
         let uname = req.body.username;
@@ -194,9 +192,8 @@ router.post('/create_account', function(req, res) {
                 connection.end();
                 return;
             });
-    });
+        });
     }); 
-    
 });
 
 router.get('/logout', function(req, res) {
@@ -252,11 +249,10 @@ router.post('/find_tournament', function(req, res){
    
     connection.query(SQLCommand, (error, results, fields) => {
         if (error) throw error;
-        
-        console.log("Results from tournament search:\n", results);
-            res.json({
-                tournament: results
-            });
+    
+        res.json({
+            tournament: results
+        });
     });   
     
     
@@ -438,7 +434,7 @@ router.post('/create_tournament', function(req, res) {
             }
         }
     );
-
+    connection.end();
 });
 
 module.exports = router;
